@@ -1,31 +1,31 @@
 <template>
-<div class="p-40">
-  <div class="">
-    <div class=" is-12">
-      <div class="columns">
-        <div class="column">
-          <div class="endSlideshow" @click="endSlideshow"><span></span><span></span></div>
-        </div>
-        <div class="column">
-          <div class="nextSlide is-pulled-right" @click="nextSlide"><span></span><span></span><span></span></div>
+<div class="slideShow p-40">
+  <div class="slideShowWrapper">
+
+    <div class="columns " style="margin-bottom:0 !important">
+      <div class="column">
+        <div class="endSlideshow" @click="endSlideshow"><span></span><span></span></div>
+      </div>
+      <div class="column">
+        <div class="nextSlide is-pulled-right" @click="nextSlide"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column is-3 aligner">
+        <div class="desc aligner-item--bottom">
+          <p class="is-size-4 has-text-info">{{slideContent[activeParent].title}}</p>
+          <p class="is-size-4 has-text-info">{{slideContent[activeParent].type}}</p>
+          <p class="is-size-4 has-text-info">{{slideContent[activeParent].desc}}</p>
+
         </div>
       </div>
 
-      <div class="columns">
-        <div class="column is-2 aligner">
-          <div class="desc aligner-item--bottom">
-            <p class="is-size-4 has-text-info">{{slideContent[activeParent].title}}</p>
-            <p class="is-size-4 has-text-info">{{slideContent[activeParent].type}}</p>
-            <p class="is-size-4 has-text-info">{{slideContent[activeParent].desc}}</p>
+      <div class="column is-9">
 
-          </div>
-        </div>
-
-        <div class="column is-10">
-
-          <div class="swiperWrapperOuter">
-            <swiper :options="swiperOption" ref="mySwiper"  >
-              <template  v-for="(slide,parentIndex) in slideContent">
+        <div class="swiperWrapperOuter">
+          <swiper :options="swiperOption" ref="mySwiper">
+            <template v-for="(slide,parentIndex) in slideContent">
               <swiper-slide :data-parent="parentIndex" :key="slideContent.id+parentIndex" v-for="(slideContent) in slide.slides" :data-length="slide.slides.length">
                 <div class="slideWrapperInner">
                   <div v-for="(item,index) in slideContent.content" :key="index+'inner'" class="single p-20" :class="[item.classes,item.type]">
@@ -49,12 +49,12 @@
               </swiper-slide>
             </template>
 
-            </swiper>
-          </div>
+          </swiper>
         </div>
       </div>
     </div>
   </div>
+
 </div>
 </template>
 
@@ -97,13 +97,13 @@ export default {
     this.ready = true
   },
   methods: {
-    setParent: function(){
+    setParent: function() {
       // console.log(this.$el.querySelector(".swiper-slide-active").getAttribute("data-parent"))
       this.activeParent = parseInt(this.$el.querySelector(".swiper-slide-active").getAttribute("data-parent"))
     },
     setColor: function(index) {
       // console.log(this.slideContent[index].color)
-        this.$emit('setColor', this.slideContent[index].color)
+      this.$emit('setColor', this.slideContent[index].color)
 
     },
     endSlideshow: function() {
@@ -112,7 +112,7 @@ export default {
       this.$emit('endSlideshow')
     },
     nextSlide: function() {
-      if (this.swiper.activeIndex  === this.$el.querySelectorAll(".swiper-slide").length - 1) {
+      if (this.swiper.activeIndex === this.$el.querySelectorAll(".swiper-slide").length - 1) {
         this.endSlideshow()
       } else {
         this.swiper.slideNext()
@@ -125,53 +125,62 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-*{
-  color: white;
+* {
+    color: white;
+}
+.slideShow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.slideShowWrapper {
+    position: relative;
 }
 .nextSlide {
     cursor: pointer;
-    width: 60px;
-    height: 60px;
-    transform: translateX(-5px);
+    width: 40px;
+    height: 30px;
+    transform: translateX(-10px);
 
     position: relative;
     span {
-        width: 10px;
+        width: 5px;
         background: white;
-        height: 120%;
+        height: 100%;
         position: absolute;
         transform-origin: center;
-        left: 24px;
-        top: -6px;
+        left: 34px;
+        top: -11px;
     }
     span:nth-of-type(1) {
         transform: rotate(45deg);
         height: 60%;
         left: 44px;
-        top: 26px;
+        top: 0;
     }
     span:nth-of-type(2) {
         transform: rotate(-45deg);
         height: 60%;
         left: 44px;
-        top: -2px;
+        top: -9px;
     }
     span:nth-of-type(3) {
         transform: rotate(90deg);
     }
 }
 .endSlideshow {
+    // transform: scale(0.65);
     cursor: pointer;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 30px;
     position: relative;
     span {
-        width: 10px;
+        width: 5px;
         background: white;
-        height: 120%;
+        height: 100%;
         position: absolute;
         transform-origin: center;
-        left: 24px;
+        left: 8px;
         top: -6px;
     }
     span:nth-of-type(1) {
@@ -184,12 +193,11 @@ export default {
 }
 .swiperWrapperOuter {
     width: 100%;
-    min-height: 800px;
+    // min-height: calc(100vh - 80px - 54px);
 
 }
 
-.swiper-container {
-    }
+.swiper-container {}
 .swiper-slide-active {
     .single {
         transform: translateY(0px) !important;
@@ -203,7 +211,7 @@ export default {
     position: relative;
     width: 100%;
     // height: 100%;
-    height: calc(100vh - 80px - 84px);
+    height: calc(100vh - 80px - 46px);
     // position: absolute;
     .single {
         position: absolute;
@@ -213,7 +221,6 @@ export default {
         // transition-delay: 0.25s;
 
     }
-
     @for $i from 1 through 16 {
         .single:nth-of-type(#{$i}) {
             transition-delay: #{$i*0.20+0.15}s;
@@ -239,6 +246,20 @@ export default {
     .desktop {
         width: 80%;
         max-width: 1024px;
+        // max-height: 400px;
+        max-height: calc(100vh - 80px - 146px);
+
+        img {
+            width: auto;
+            // max-height: 400px;
+            max-height: calc(100vh - 80px - 146px);
+
+        }
+        // // width: 80%;
+        // // max-width: 1024px;
+        // img{
+        //   width: 15%;
+        // }
     }
     .mobile {
         width: 30%;
