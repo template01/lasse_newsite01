@@ -1,0 +1,114 @@
+[{
+    "id": "01",
+    "title": "Strypes",
+    "type": "Identity / Branding / Pitch",
+    "desc": "blah blah",
+    "link": "http://strypes.template-studio.nl",
+    "year": "2018",
+    "color": "darkblue-background",
+    "slides": [{
+        "id": "01",
+        "content": [{
+          "type": "desktop",
+          "source": "/img/content/strypesDesktop01.jpg",
+          "classes": "north-west"
+        }, {
+          "type": "mobile",
+          "source": "/img/content/strypesMobile03.jpg",
+          "classes": "south-east"
+        }]
+      },
+      {
+        "id": "02",
+        "content": [{
+          "type": "desktop",
+          "source": "/img/content/strypesDesktop03.jpg",
+          "classes": "south-west"
+        }, {
+          "type": "desktop",
+          "source": "/img/content/strypesDesktopIntro01.jpg",
+          "classes": "north-east"
+        }]
+      },
+      {
+        "id": "03",
+        "content": [{
+          "type": "desktop",
+          "source": "/img/content/strypesDesktop02.jpg",
+          "classes": "south-west"
+        }, {
+          "type": "mobile",
+          "source": "/img/content/strypesMobile04.jpg",
+          "classes": "north-east"
+        }]
+      }
+    ]
+  },
+  {
+    "id": "02",
+    "title": "Sander",
+    "type": "Identity / Implementation",
+    "desc": "shita blah",
+    "link": "shita blah",
+    "year": "2018",
+    "color": "green-background",
+    "slides": [{
+        "id": "01",
+        "content": [{
+          "type": "desktop",
+          "source": "/img/content/sanderDesktop01.jpg",
+          "classes": "north-west"
+        }, {
+          "type": "desktop",
+          "source": "/img/content/sanderDesktop02.jpg",
+          "classes": "south-east"
+        }]
+      },
+      {
+        "id": "02",
+        "content": [{
+          "type": "desktop",
+          "source": "/img/content/sanderDesktop04.jpg",
+          "classes": "south-west"
+        }, {
+          "type": "mobile",
+          "source": "/img/content/sanderMobile02.jpg",
+          "classes": "north-east"
+        }]
+      }, {
+        "id": "03",
+        "content": [{
+          "type": "desktop",
+          "source": "/img/content/sanderDesktop07.jpg",
+          "classes": "north-west"
+        }, {
+          "type": "mobile",
+          "source": "/img/content/sanderMobile04.jpg",
+          "classes": "south-east"
+        }]
+      }
+    ]
+  },
+  {
+    "id": "03",
+    "title": "Connect-it",
+    "type": "Concept / Prototyping",
+    "desc": "shita blah",
+    "link": "shita blah",
+    "year": "2015",
+    "color": "purple-background",
+    "slides": [{
+      "id": "01",
+      "content": [{
+        "type": "desktop",
+        "source": "/img/content/connectit01.jpg",
+        "classes": "north-west"
+      }, {
+        "type": "desktop",
+        "source": "/img/content/connectit04.jpg",
+        "classes": "south-east"
+      }]
+    }]
+  }
+
+]

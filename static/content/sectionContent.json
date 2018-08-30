@@ -1,0 +1,92 @@
+[{
+    "id": "intro",
+    "fullHeight": true,
+    "content": [{
+      "header": "Full spectrum digital designer",
+      "classes": "column is-5 has-text-info ",
+      "tagline": "Lasse Christensen"
+    }, {
+      "component": "pongWrapper"
+    }],
+    "background": {
+      "type": "image",
+      "source": "/img/bg/federica-galli-449563-unsplash_right_sm.jpg",
+      "align":"top bottom"
+    }
+
+  }, {
+    "id": "tools",
+    "fullHeight": false,
+    "content": [{
+      "header": "Pen + Paper + Open mind",
+      "classes": "column is-12 has-text-info pb-15",
+      "tagline": "Favorite Tools"
+    }],
+    "background": {
+      "type": "solid",
+      "class": "grey-background",
+      "align":"center center"
+    }
+  }, {
+    "id": "work",
+    "fullHeight": true,
+    "content": [{
+        "header": "Strategy,<br>Ideation,<br>Implementation",
+        "classes": "column is-12 has-text-info ",
+        "tagline": "Selected Work"
+      },
+      {
+        "component": "workSlides"
+      }
+    ],
+    "background": {
+      "type": "image",
+      "source": "/img/bg/template_studio_dark2.jpg",
+      "align":"center center"
+    }
+  }, {
+    "id": "tech",
+    "fullHeight": false,
+    "content": [{
+      "header": "Vuejs + NUXTJS + *-api",
+      "classes": "column is-12 has-text-info pb-15",
+      "tagline": "Favorite Tech-stack"
+    }],
+    "background": {
+      "type": "solid",
+      "class": "grey-background",
+      "align":"center center"
+    }
+  }, {
+    "id": "about",
+    "fullHeight": true,
+    "content": [{
+        "header": "Maker,<br>Thinker,<br>Tinkerer",
+        "classes": "column is-12 has-text-info ",
+        "tagline": "About Lasse"
+      },
+      {
+        "component": "cvBegin"
+      }
+    ],
+    "background": {
+      "type": "image",
+      "source": "/img/bg/lasse.jpg",
+      "align":"top center"
+    }
+  },
+  {
+    "id": "cv",
+    "fullHeight": false,
+    "content": [{
+      "classes": "column is-12 has-text-info ",
+      "component": "cv"
+    }],
+    "background": {
+      "type": "solid",
+      "class": "grey-background",
+      "align":"center center"
+    }
+
+  }
+]
