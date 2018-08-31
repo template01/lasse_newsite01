@@ -1,28 +1,41 @@
 <template>
-<div :class="workSlideOpen ? 'workSlideOpen':''" class="workSlide">
-  <div class="workSlides" :class="[workSlideOpen ? 'workSlidesOpen':'', setBackgroundColor]" >
+  <div>
 
-      <slideShow @setColor="setBackgroundColor = $event" @endSlideshow="endSlideshow" v-if="hideStartButton"></slideShow>
-  </div>
-  <div @click="startSlide" class="startWrapper" v-if="!hideStartButton">
-    <div class="start aligner" :class="setBackgroundColor">
+    <div :class="workSlideOpen ? 'workSlideOpen':''" class="workSlide">
+      <div class="workSlides" :class="[workSlideOpen ? 'workSlidesOpen':'', setBackgroundColor]" :style="$mq != 'lg' ?{'left':'15%'}:{}" >
+
+        <slideShow @setColor="setBackgroundColor = $event" @endSlideshow="endSlideshow" v-if="hideStartButton && $mq === 'lg'"></slideShow>
+        <slideShowMobile @setColor="setBackgroundColor = $event" @endSlideshow="endSlideshow" v-if="hideStartButton && $mq != 'lg'"></slideShowMobile>
+      </div>
+      <div @click="startSlide" class="startWrapper" v-if="!hideStartButton && $mq === 'lg'">
+        <div class="start aligner" :class="setBackgroundColor">
+        </div>
+        <div class="bar-wrapper aligner">
+          <div class="vl"></div>
+          <div class="vl"></div>
+          <div class="vl"></div>
+        </div>
+      </div>
+
     </div>
-    <div class="bar-wrapper aligner">
-      <div class="vl"></div>
-      <div class="vl"></div>
-      <div class="vl"></div>
+    <div @click="startSlide" class="startWrapperMobile" v-if="!hideStartButton && $mq != 'lg'">
+      <div class="startMobile aligner uppercase has-text-info is-size-4" :class="setBackgroundColor">
+        Have a look
+      </div>
+
     </div>
   </div>
-</div>
 </template>
 
 <script>
+import slideShowMobile from '~/components/slideShowMobile'
 import slideShow from '~/components/slideShow'
 import slideContentJson from '~/static/content/slideshowContent.json'
 
 export default {
   components:{
-    slideShow
+    slideShow,
+    slideShowMobile
   },
   data() {
     return {
@@ -137,5 +150,46 @@ height: 100%;
             min-height: 60px;
         }
     }
+
 }
+.startWrapperMobile{
+  position: absolute;
+left: 0;
+bottom: 0;
+height: 25%;
+width:  100%;
+}
+.startMobile {
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+.bar-wrapper {
+    user-select: none;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 120%;
+    width: 15vw;
+    border-radius: 100%;
+    transform: translateX(5vw) translateY(-10vh);
+    transition: all 0.25s ease-in-out;
+    transform-origin: center;
+
+    .vl {
+        border-left: 10px solid white;
+        height: 60px;
+        float: left;
+        display: inline-block;
+        transform: translateX(-2.5vw);
+        // width: 10px;
+        margin-left: 10px;
+        min-height: 60px;
+    }
+}
+
+
 </style>

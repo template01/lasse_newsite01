@@ -13,11 +13,11 @@
 
       </p>
       <p :class="$store.state.initGameState ? 'gameRunningFontSize':''" v-else>
-        <span v-if="!playBegun" @click="startGame()">$ start<span class="blink">▊</span> {{score}}</span>
-        <span v-else @click="endGame()">$ exit<span class="blink">▊</span> {{score}}</span>
+        <span v-if="!playBegun" @click="startGame()">$ start<span class="blink">▊</span> {{score.a}}:{{score.b}}</span>
+        <span v-else @click="endGame()">$ exit<span class="blink">▊</span> {{score.a}}:{{score.b}}</span>
       </p>
     </div>
-    <pong @score="setScore" v-if="playBegun"></pong>
+    <pong @score="setScore($event)" v-if="playBegun"></pong>
   </div>
 
   <computerLoader v-if="!ready && !showGuide" class="loaderCustom"></computerLoader>
@@ -36,7 +36,7 @@ export default {
     return {
       test: 'tesat',
       playBegun: false,
-      score: 0,
+      score: {'a':0,'b':0},
       ready: false,
       showGuide: false,
 
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     setScore: function(scoreContent) {
-      this.score = this.score + 1
+      this.score[scoreContent] = this.score[scoreContent] + 1
     },
     toggleScroll: function(toggle) {
       if (toggle) {
@@ -66,7 +66,7 @@ export default {
       this.toggleScroll(false)
       this.$store.commit('SET_GAME_STATE', false)
       this.playBegun = false;
-      this.score = 0;
+      this.score = {'a':0,'b':0};
       this.ready = false;
       this.showGuide = false;
     }

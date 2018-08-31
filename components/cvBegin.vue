@@ -1,6 +1,6 @@
 <template>
   <div class="cvBegin grey-background p-40">
-    <p class="is-size-2 uppercase">
+    <p class="is-size-2 is-size-4-touch uppercase">
       SKILLS / CV / BACKGROUND
     </p>
 

@@ -2,7 +2,7 @@
     "id": "01",
     "title": "Strypes",
     "type": "Identity / Branding / Pitch",
-    "desc": "blah blah",
+    "desc": "Pitch material for service ingeneering company Strypes. The goal was to present a new identity and webpresence delivering a modern clean appearance.",
     "link": "http://strypes.template-studio.nl",
     "year": "2018",
     "color": "darkblue-background",
@@ -46,10 +46,10 @@
   },
   {
     "id": "02",
-    "title": "Sander",
+    "title": "Sander van Wettum",
     "type": "Identity / Implementation",
-    "desc": "shita blah",
-    "link": "shita blah",
+    "desc": "A straightforward, no fuss website for photographer Sander van Wettum. The use of colors, custom icons and the lightbox mode give the site its own clean identity.",
+    "link": "https://www.sandervanwettum.com/",
     "year": "2018",
     "color": "green-background",
     "slides": [{
@@ -93,9 +93,9 @@
     "id": "03",
     "title": "Connect-it",
     "type": "Concept / Prototyping",
-    "desc": "shita blah",
-    "link": "shita blah",
-    "year": "2015",
+    "desc": "A datavisualization prototype developed in collaboration with Institute for Environmental Studies at Vrije Universiteit Amsterdam. The goal of the project was to develop a tool for researchers to understand fragmentation within global environmental initiatives and programs.",
+    "link": "http://connect-it-climate.eu/",
+    "year": "2015/16",
     "color": "purple-background",
     "slides": [{
       "id": "01",
@@ -108,7 +108,63 @@
         "source": "/img/content/connectit04.jpg",
         "classes": "south-east"
       }]
+    },
+    {
+      "id": "02",
+      "content": [{
+        "type": "desktop",
+        "source": "/img/content/connectit03.jpg",
+        "classes": "south-east"
+      }, {
+        "type": "desktop",
+        "source": "/img/content/connectit05.jpg",
+        "classes": "north-west"
+      }]
     }]
+  },
+  {
+    "id": "04",
+    "title": "Pretty Old Pictures",
+    "type": "Concept / Identity / Product",
+    "desc": "Pretty Old Pictures collects, prints and sells copyright free images from Flickr: The Commons. What started as a research project delving into the impressive online collection of Het Nieuwe Instituut quickly became a fully realized product sold in the museum shop.",
+    "link": "http://prettyold.pictures",
+    "year": "2015",
+    "color": "darkgreen-background",
+    "slides": [{
+        "id": "01",
+        "content": [{
+          "type": "desktop",
+          "source": "/img/content/popDesktop02.jpg",
+          "classes": "south-east"
+        }, {
+          "type": "photo-square",
+          "source": "/img/content/popInsta03.jpg",
+          "classes": "north-west"
+        }]
+      }, {
+        "id": "02",
+        "content": [{
+          "type": "photo",
+          "source": "/img/content/popPhoto04.jpg",
+          "classes": "south-west"
+        }, {
+          "type": "photo-square",
+          "source": "/img/content/popInsta02.jpg",
+          "classes": "north-east"
+        }]
+      },
+      {
+        "id": "03",
+        "content": [{
+          "type": "desktop",
+          "source": "/img/content/popDesktop01.jpg",
+          "classes": "north-west"
+        }, {
+          "type": "photo",
+          "source": "/img/content/popPhoto06.jpg",
+          "classes": "south-east"
+        }]
+      }
+    ]
   }
-
 ]

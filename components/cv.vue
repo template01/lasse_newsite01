@@ -1,5 +1,5 @@
 <template>
-<div class="columns cv is-size-4">
+<div class="columns cv is-size-4  is-size-6-touch">
   <div class="column is-5" v-html="result1">
   </div>
   <div class="column is-5 is-offset-1" v-html="result2">

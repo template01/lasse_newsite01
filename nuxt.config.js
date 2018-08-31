@@ -62,6 +62,17 @@ module.exports = {
   loading: {
     color: '#3B8070'
   },
+  modules: [
+  // Simple usage
+  ['nuxt-mq', {
+    breakpoints: {
+      sm: 450,
+      md: 1024,
+      lg: Infinity,
+    }
+  }]
+],
+
   /*
    ** Build configuration
    */

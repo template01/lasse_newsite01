@@ -1,36 +1,38 @@
 <template>
-<section class="">
-  <div :id="section.id" :class="[index===0 ? ($store.state.initGameState ? 'playSlide playScreen':'playSlide playScreenInactive'):'', section.fullHeight?'fullHeight':'', section.background.type === 'solid' ? section.background.class:'']" class="sectionWrapper"
-    v-for="(section,index) in sections" :key="'key'+section.id" :style=" [section.background.type === 'image' ? { 'background-position' : section.background.align, 'background-image': 'url(' + section.background.source + ')' }:{},$store.state.initGameState && index===0?{'position':'absolute','z-index':1}:{}]">
-    <div class="p-40">
-      <div class="columns" v-for="(item,index) in section.content" :key="index">
-        <div v-if="item.header" :class="item.classes">
-          <p class="is-size-2" v-if="item.tagline" v-html="item.tagline"></p>
-          <p class="is-size-1" v-html="item.header">
-          </p>
-        </div>
-        <div v-if="item.component === 'workSlides'">
-          <workSlides></workSlides>
-        </div>
-        <div v-if="item.component === 'cvBegin'">
-          <cvBegin></cvBegin>
-        </div>
-        <div v-if="item.component === 'cv'" :class="item.classes">
-          <cv></cv>
-        </div>
-        <div v-if="item.component === 'pongWrapper'">
-
-          <div>
-            <!-- <startWorkSlide></startWorkSlide> -->
-            <pongWrapper class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></pongWrapper>
+  <div>
+    <section class="">
+      <div :id="section.id" :class="[index===0 ? ($store.state.initGameState ? 'playSlide playScreen':'playSlide playScreenInactive'):'', section.fullHeight?'fullHeight':'', section.background.type === 'solid' ? section.background.class:'']" class="sectionWrapper"
+      v-for="(section,index) in sections" :key="'key'+section.id" :style=" [section.background.type === 'image' ? { 'background-position' : section.background.align, 'background-image': 'url(' + section.background.source + ')' }:{},$store.state.initGameState && index===0?{'position':'absolute','z-index':1}:{}]">
+      <div :class="section.id!='contact'?'p-40':''" v-for="(item,index) in section.content" :key="index">
+        <div class="columns">
+          <div v-if="item.header" :class="item.classes">
+            <p class="is-size-2-desktop is-size-4-touch" v-if="item.tagline" v-html="item.tagline"></p>
+            <p class="is-size-1-desktop is-size-2-touch" v-html="item.header">
+            </p>
           </div>
-        </div>
+          <div v-if="item.component === 'workSlides'">
+            <workSlides></workSlides>
+          </div>
+          <div v-if="item.component === 'cvBegin'">
+            <cvBegin></cvBegin>
+          </div>
+          <div v-if="item.component === 'cv'" :class="item.classes">
+            <cv></cv>
+          </div>
 
+          <div v-if="item.component === 'pongWrapper' && $mq === 'lg'">
+            <div>
+              <pongWrapper class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></pongWrapper>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
+    <contact></contact>
 
-</section>
+  </section>
+  </div>
 </template>
 
 <script>
@@ -39,11 +41,13 @@ import sectionContent from '~/static/content/sectionContent.json'
 import pongWrapper from '~/components/pongWrapper'
 import cvBegin from '~/components/cvBegin'
 import cv from '~/components/cv'
+import contact from '~/components/contact'
 import workSlides from '~/components/workSlides'
 export default {
   components: {
     cvBegin,
     cv,
+    contact,
     pongWrapper,
     workSlides
   },

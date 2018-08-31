@@ -1,5 +1,5 @@
 <template>
-<div class="slideShow p-40">
+<div class="slideShow p-70">
   <div class="slideShowWrapper">
 
     <div class="columns " style="margin-bottom:0 !important">
@@ -18,28 +18,49 @@
       </div>
     </div>
 
-    <div class="columns">
-      <div class="column is-3 aligner">
-        <div class="desc aligner-item--bottom pr-60">
-          <p class="is-size-4 has-text-info mb-20 descTitle">{{slideContent[activeParent].title}}</p>
+    <div class="columns pt-100">
+      <!-- <div class="column aligner">
+        <div class="desc aligner-item--bottom">
+          <p class="is-size-5 has-text-info mb-20 descTitle">{{slideContent[activeParent].title}}</p>
           <div class="mb-20">
-            <p class="is-size-5 has-text-info">Type: {{slideContent[activeParent].type}}</p>
-            <p class="is-size-5 has-text-info">Year: {{slideContent[activeParent].year}}</p>
+            <p class="is-size-6 has-text-info">Type: {{slideContent[activeParent].type}}</p>
+            <p class="is-size-6 has-text-info">Year: {{slideContent[activeParent].year}}</p>
           </div>
-          <p class="is-size-5 has-text-info mb-20">{{slideContent[activeParent].desc}}</p>
-          <div class="aWrapper is-size-5 has-text-info">
+          <p class="is-size-6 has-text-info mb-20">{{slideContent[activeParent].desc}}</p>
+          <div class="aWrapper is-size-6 has-text-info">
             Link: <a :href="slideContent[activeParent].link">{{slideContent[activeParent].link}}</a>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="column is-9">
 
-        <div class="swiperWrapperOuter">
+        <div class="">
           <swiper :options="swiperOption" ref="mySwiper">
-            <template v-for="(slide,parentIndex) in slideContent">
-              <swiper-slide :data-parent="parentIndex" :key="slideContent.id+parentIndex" v-for="(slideContent) in slide.slides" :data-length="slide.slides.length">
-                <div class="slideWrapperInner">
+            <template v-for="(slide,parentIndex) in slideContent" >
+              <swiper-slide :key="'first'+parentIndex"  >
+                {{slide.desc}}
+              </swiper-slide>
+              <template v-for="(slideContent,index) in slide.slides" >
+                <!-- <swiper-slide v-for="(slideMedia,index) slideContent.content" :key="'media'+index">
+                  {{slideMedia}}
+                </swiper-slide> -->
+                {{index}}
+                {{slideContent.content}}
+                <!-- <swiper-slide :key="'media'+index"  >
+                  {{slideContent}}
+                  {{slide.desc}}
+                </swiper-slide> -->
+
+<!--
+              <swiper-slide  v-for="(item) in slideContent.content" :key="slideContent.id+parentIndex"  >
+                {{item}}
+
+              </swiper-slide> -->
+            </template>
+
+              <!-- <swiper-slide :data-parent="parentIndex" :key="slideContent.id+parentIndex" v-for="(slideContent) in slide.slides" :data-length="slide.slides.length">
+                <div class="">
                   <div v-for="(item,index) in slideContent.content" :key="index+'inner'" class="single m-20" :class="[item.classes,item.type]">
                   <div v-if="item.type === 'desktop'">
                       <div class="browser-mockup">
@@ -59,7 +80,7 @@
                   </div>
 
                 </div>
-              </swiper-slide>
+              </swiper-slide> -->
             </template>
 
           </swiper>
@@ -86,7 +107,7 @@ export default {
   data() {
     return {
       swiperOption: {
-        effect: 'fade',
+        // effect: 'fade',
         speed: 0,
       },
       activeIndex: 0,
@@ -151,6 +172,7 @@ export default {
 }
 .nextSlide {
     cursor: pointer;
+    transform: scale(0.8);
 
     .nextSlideInner{
       width: 40px;
@@ -187,6 +209,7 @@ export default {
 }
 .endSlideshow {
     // transform: scale(0.65);
+    transform: scale(0.8);
     cursor: pointer;
 
     position: relative;
@@ -213,108 +236,108 @@ export default {
     }
 
 }
-.swiperWrapperOuter {
-    width: 100%;
-    // min-height: calc(100vh - 80px - 54px);
-
-}
-
-.swiper-container {}
-.swiper-slide-active {
-    .single {
-        transform: translateY(0px) !important;
-        opacity: 1 !important;
-    }
-}
-.slideWrapperInner {
-    img {
-        display: block;
-    }
-    position: relative;
-    width: 100%;
-    // height: 100%;
-    height: calc(100vh - 80px - 16px);
-    // position: absolute;
-    .single {
-        position: absolute;
-        transform: translateY(40px);
-        opacity: 0;
-        transition: all 0.25s ease-in-out;
-        // transition-delay: 0.25s;
-
-    }
-    @for $i from 1 through 16 {
-        .single:nth-of-type(#{$i}) {
-            transition-delay: #{$i*0.20+0.15}s;
-        }
-    }
-
-    .south-east {
-        bottom: 0;
-        right: 0;
-    }
-    .south-west {
-        bottom: 0;
-        left: 0;
-    }
-    .north-east {
-        top: 0;
-        right: 0;
-    }
-    .north-west {
-        top: 0;
-        left: 0;
-    }
-    .desktop {
-        width: 80%;
-        max-width: 1024px;
-        max-height: calc(100vh - 80px - 116px);
-        img {
-            width: auto;
-            max-height: calc(100vh - 80px - 116px);
-
-        }
-    }
-    .mobile {
-        width: 30%;
-        max-width: 400px;
-        max-height: 400px;
-        img {
-            width: auto;
-            max-height: 400px;
-        }
-
-    }
-    .photo {
-        border: 5px solid rgba(255,255,255,0.85);
-        box-sizing: border-box;
-        width: 60%;
-        max-width: 1024px;
-        max-height: calc(100vh - 80px - 116px);
-        img {
-            width: auto;
-            max-height: calc(100vh - 80px - 116px);
-
-        }
-
-    }
-
-    .photo-square {
-        border: 5px solid rgba(255,255,255,0.85);
-        box-sizing: border-box;
-        width: 30%;
-        max-width: 768px;
-        min-width: 340px;
-        max-height: calc(100vh - 80px - 116px);
-        img {
-            width: auto;
-            max-height: calc(100vh - 80px - 116px);
-
-        }
-
-    }
-
-}
+// .swiperWrapperOuter {
+//     width: 100%;
+//     // min-height: calc(100vh - 80px - 54px);
+//
+// }
+//
+// .swiper-container {}
+// .swiper-slide-active {
+//     .single {
+//         transform: translateY(0px) !important;
+//         opacity: 1 !important;
+//     }
+// }
+// .slideWrapperInner {
+//     img {
+//         display: block;
+//     }
+//     position: relative;
+//     width: 100%;
+//     // height: 100%;
+//     height: calc(100vh - 80px - 16px);
+//     // position: absolute;
+//     .single {
+//         position: absolute;
+//         transform: translateY(40px);
+//         opacity: 0;
+//         transition: all 0.25s ease-in-out;
+//         // transition-delay: 0.25s;
+//
+//     }
+//     @for $i from 1 through 16 {
+//         .single:nth-of-type(#{$i}) {
+//             transition-delay: #{$i*0.20+0.15}s;
+//         }
+//     }
+//
+//     .south-east {
+//         bottom: 0;
+//         right: 0;
+//     }
+//     .south-west {
+//         bottom: 0;
+//         left: 0;
+//     }
+//     .north-east {
+//         top: 0;
+//         right: 0;
+//     }
+//     .north-west {
+//         top: 0;
+//         left: 0;
+//     }
+//     .desktop {
+//         width: 80%;
+//         max-width: 1024px;
+//         max-height: calc(100vh - 80px - 116px);
+//         img {
+//             width: auto;
+//             max-height: calc(100vh - 80px - 116px);
+//
+//         }
+//     }
+//     .mobile {
+//         width: 30%;
+//         max-width: 400px;
+//         max-height: 400px;
+//         img {
+//             width: auto;
+//             max-height: 400px;
+//         }
+//
+//     }
+//     .photo {
+//         border: 5px solid rgba(255,255,255,0.85);
+//         box-sizing: border-box;
+//         width: 60%;
+//         max-width: 1024px;
+//         max-height: calc(100vh - 80px - 116px);
+//         img {
+//             width: auto;
+//             max-height: calc(100vh - 80px - 116px);
+//
+//         }
+//
+//     }
+//
+//     .photo-square {
+//         border: 5px solid rgba(255,255,255,0.85);
+//         box-sizing: border-box;
+//         width: 30%;
+//         max-width: 768px;
+//         min-width: 340px;
+//         max-height: calc(100vh - 80px - 116px);
+//         img {
+//             width: auto;
+//             max-height: calc(100vh - 80px - 116px);
+//
+//         }
+//
+//     }
+//
+// }
 .desc {
     width: 100%;
     // position: absolute;

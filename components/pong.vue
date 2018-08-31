@@ -70,11 +70,11 @@ export default {
       pong.start()
 
       pong.players.b.on('point', function() {
-        vm.$emit('score', 'yaayay')
+        vm.$emit('score', 'b')
         // alert('score')
       })
       pong.players.a.on('point', function() {
-        vm.$emit('score', 'yaayay')
+        vm.$emit('score', 'a')
         // alert('score')
 
       })
