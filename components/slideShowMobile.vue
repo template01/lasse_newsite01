@@ -1,94 +1,79 @@
 <template>
-<div class="slideShow p-70">
-  <div class="slideShowWrapper">
+<div>
 
-    <div class="columns " style="margin-bottom:0 !important">
-      <div class="column is-paddingless">
-        <div class="endSlideshow is-pulled-left" @click="endSlideshow">
-          <div class="endSlideshowInner" >
-            <span></span><span></span>
+  <div class="slideShow p-70">
+    <div class="slideShowWrapper">
+
+      <div class="columns " style="margin-bottom:0 !important">
+        <div class="column is-paddingless">
+          <div class="endSlideshow is-pulled-left" @click="endSlideshow">
+            <div class="endSlideshowInner">
+              <span></span><span></span>
+            </div>
+          </div>
+        </div>
+        <div class="column is-paddingless">
+          <div class="nextSlide is-pulled-right " @click="nextSlide; swiper.slideNext()">
+
+            <div class="nextSlideInner"><span></span><span></span><span></span></div>
           </div>
         </div>
       </div>
-      <div class="column is-paddingless">
-        <div  class="nextSlide is-pulled-right " @click="nextSlide">
 
-          <div class="nextSlideInner" ><span></span><span></span><span></span></div>
-        </div>
-      </div>
-    </div>
+      <div class="columns pt-100">
+        <div class="column">
 
-    <div class="columns pt-100">
-      <!-- <div class="column aligner">
-        <div class="desc aligner-item--bottom">
-          <p class="is-size-5 has-text-info mb-20 descTitle">{{slideContent[activeParent].title}}</p>
-          <div class="mb-20">
-            <p class="is-size-6 has-text-info">Type: {{slideContent[activeParent].type}}</p>
-            <p class="is-size-6 has-text-info">Year: {{slideContent[activeParent].year}}</p>
-          </div>
-          <p class="is-size-6 has-text-info mb-20">{{slideContent[activeParent].desc}}</p>
-          <div class="aWrapper is-size-6 has-text-info">
-            Link: <a :href="slideContent[activeParent].link">{{slideContent[activeParent].link}}</a>
-          </div>
-        </div>
-      </div> -->
-
-      <div class="column is-9">
-
-        <div class="">
-          <swiper :options="swiperOption" ref="mySwiper">
-            <template v-for="(slide,parentIndex) in slideContent" >
-              <swiper-slide :key="'first'+parentIndex"  >
-                {{slide.desc}}
+          <div class="">
+            <swiper :options="swiperOption" ref="mySwiper" @transitionStart="nextSlide">
+              <template v-for="(slide,parentIndex) in slideContent">
+              <swiper-slide :data-parent="parentIndex"  class="p-40 mt-80" :key="'first'+parentIndex"  >
+                <p class="is-size-4 has-text-info mb-40 descTitle">{{slide.title}}</p>
+                <div class="mb-40">
+                  <p class="is-size-5 has-text-info">Type: {{slide.type}}</p>
+                  <p class="is-size-5 has-text-info">Year: {{slide.year}}</p>
+                </div>
+                <p class="is-size-5 has-text-info mb-40">{{slide.desc}}</p>
+                <div class="aWrapper is-size-5 has-text-info">
+                  Link: <a target="_blank" :href="slide.link">{{slide.link}}</a>
+                </div>
               </swiper-slide>
-              <template v-for="(slideContent,index) in slide.slides" >
-                <!-- <swiper-slide v-for="(slideMedia,index) slideContent.content" :key="'media'+index">
-                  {{slideMedia}}
-                </swiper-slide> -->
-                {{index}}
-                {{slideContent.content}}
-                <!-- <swiper-slide :key="'media'+index"  >
-                  {{slideContent}}
-                  {{slide.desc}}
-                </swiper-slide> -->
+              <template v-for="(slideContent,slideIndex) in slide.slides" >
 
-<!--
-              <swiper-slide  v-for="(item) in slideContent.content" :key="slideContent.id+parentIndex"  >
-                {{item}}
-
-              </swiper-slide> -->
-            </template>
-
-              <!-- <swiper-slide :data-parent="parentIndex" :key="slideContent.id+parentIndex" v-for="(slideContent) in slide.slides" :data-length="slide.slides.length">
-                <div class="">
-                  <div v-for="(item,index) in slideContent.content" :key="index+'inner'" class="single m-20" :class="[item.classes,item.type]">
-                  <div v-if="item.type === 'desktop'">
-                      <div class="browser-mockup">
+                <template v-for="(item,singleIndex) in slideContent.content" >
+                <swiper-slide :data-parent="parentIndex" class="p-20 mt-80" :key="'media'+parentIndex+slideIndex+singleIndex"  >
+                  <div class="mobileImageWrapper aligner" v-if="item.type === 'desktop'">
+                      <div class="browser-mockup-mobile">
                         <img :src="item.source" />
                       </div>
 
                     </div>
-                    <div v-if="item.type === 'mobile'" :class="item.classes">
+                    <div class="mobileImageWrapper aligner" v-if="item.type === 'mobile'">
                       <div class="browser-mockup-mobile">
                         <img :src="item.source" />
                       </div>
                     </div>
-                    <div v-if="item.type === 'photo' || item.type === 'photo-square'" :class="item.classes">
+                    <div class="mobileImageWrapper aligner" v-if="item.type === 'photo' || item.type === 'photo-square'" >
                       <img :src="item.source" />
                     </div>
 
-                  </div>
+                </swiper-slide>
+              </template>
 
-                </div>
-              </swiper-slide> -->
-            </template>
+              </template>
 
-          </swiper>
+              </template>
+
+            </swiper>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 
+  <div class="swipeStartWrapperMobile aligner is-size-4" v-if="!hideGuide">
+    Swipe!
+  </div>
 </div>
 </template>
 
@@ -107,12 +92,17 @@ export default {
   data() {
     return {
       swiperOption: {
-        // effect: 'fade',
-        speed: 0,
+        effect: 'fade',
+        fadeEffect: {
+          crossFade: true
+        },
+        speed: 100,
       },
       activeIndex: 0,
       activeParent: 0,
       ready: false,
+      hideGuide: false,
+
       slideContent: slideContentJson
 
     }
@@ -129,6 +119,8 @@ export default {
   },
   mounted() {
     this.ready = true
+    this.hideGuide = false
+
   },
   methods: {
     setParent: function() {
@@ -146,10 +138,11 @@ export default {
       this.$emit('endSlideshow')
     },
     nextSlide: function() {
+      this.hideGuide = true
       if (this.swiper.activeIndex === this.$el.querySelectorAll(".swiper-slide").length - 1) {
         this.endSlideshow()
       } else {
-        this.swiper.slideNext()
+        // this.swiper.slideNext()
         this.setParent()
         this.setColor(this.activeParent)
       }
@@ -174,10 +167,10 @@ export default {
     cursor: pointer;
     transform: scale(0.8);
 
-    .nextSlideInner{
-      width: 40px;
-      height: 30px;
-      transform: translateX(-16px) translateY(10px);
+    .nextSlideInner {
+        width: 40px;
+        height: 30px;
+        transform: translateX(-16px) translateY(10px);
 
     }
 
@@ -213,10 +206,10 @@ export default {
     cursor: pointer;
 
     position: relative;
-    .endSlideshowInner{
-      width: 40px;
-      height: 30px;
-      transform: translateX(4px) translateY(6px);
+    .endSlideshowInner {
+        width: 40px;
+        height: 30px;
+        transform: translateX(4px) translateY(6px);
 
     }
     span {
@@ -236,108 +229,27 @@ export default {
     }
 
 }
-// .swiperWrapperOuter {
-//     width: 100%;
-//     // min-height: calc(100vh - 80px - 54px);
-//
-// }
-//
-// .swiper-container {}
-// .swiper-slide-active {
-//     .single {
-//         transform: translateY(0px) !important;
-//         opacity: 1 !important;
-//     }
-// }
-// .slideWrapperInner {
-//     img {
-//         display: block;
-//     }
-//     position: relative;
-//     width: 100%;
-//     // height: 100%;
-//     height: calc(100vh - 80px - 16px);
-//     // position: absolute;
-//     .single {
-//         position: absolute;
-//         transform: translateY(40px);
-//         opacity: 0;
-//         transition: all 0.25s ease-in-out;
-//         // transition-delay: 0.25s;
-//
-//     }
-//     @for $i from 1 through 16 {
-//         .single:nth-of-type(#{$i}) {
-//             transition-delay: #{$i*0.20+0.15}s;
-//         }
-//     }
-//
-//     .south-east {
-//         bottom: 0;
-//         right: 0;
-//     }
-//     .south-west {
-//         bottom: 0;
-//         left: 0;
-//     }
-//     .north-east {
-//         top: 0;
-//         right: 0;
-//     }
-//     .north-west {
-//         top: 0;
-//         left: 0;
-//     }
-//     .desktop {
-//         width: 80%;
-//         max-width: 1024px;
-//         max-height: calc(100vh - 80px - 116px);
-//         img {
-//             width: auto;
-//             max-height: calc(100vh - 80px - 116px);
-//
-//         }
-//     }
-//     .mobile {
-//         width: 30%;
-//         max-width: 400px;
-//         max-height: 400px;
-//         img {
-//             width: auto;
-//             max-height: 400px;
-//         }
-//
-//     }
-//     .photo {
-//         border: 5px solid rgba(255,255,255,0.85);
-//         box-sizing: border-box;
-//         width: 60%;
-//         max-width: 1024px;
-//         max-height: calc(100vh - 80px - 116px);
-//         img {
-//             width: auto;
-//             max-height: calc(100vh - 80px - 116px);
-//
-//         }
-//
-//     }
-//
-//     .photo-square {
-//         border: 5px solid rgba(255,255,255,0.85);
-//         box-sizing: border-box;
-//         width: 30%;
-//         max-width: 768px;
-//         min-width: 340px;
-//         max-height: calc(100vh - 80px - 116px);
-//         img {
-//             width: auto;
-//             max-height: calc(100vh - 80px - 116px);
-//
-//         }
-//
-//     }
-//
-// }
+
+.swipeStartWrapperMobile {
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 25%;
+    width: 100%;
+    background: rgba(255,255,255,0.1);
+    z-index: 2;
+}
+
+.mobileImageWrapper{
+  // div{
+  //   margin: 0 auto;
+  // }
+}
+img{
+  max-height: 70vh;
+  margin: 0 auto;
+}
 .desc {
     width: 100%;
     // position: absolute;
@@ -363,8 +275,5 @@ export default {
         }
     }
 }
-// .slide-up{
-//
-//   opacity: 0;
-// }
+
 </style>

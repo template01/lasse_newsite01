@@ -18,7 +18,7 @@
       </div>
 
     </div>
-    <div @click="startSlide" class="startWrapperMobile" v-if="!hideStartButton && $mq != 'lg'">
+    <div @click="startSlide" class="startWrapperMobile" v-if="$mq != 'lg'">
       <div class="startMobile aligner uppercase has-text-info is-size-4" :class="setBackgroundColor">
         Have a look
       </div>
@@ -84,6 +84,7 @@ export default {
     height: 100%;
     right: 0;
     top: 0;
+    z-index: 1;
     width: 100%;
     transform: translateX(85%);
     transition: all 0.25s ease-in-out;

@@ -28,7 +28,7 @@
           </div>
           <p class="is-size-5 has-text-info mb-20">{{slideContent[activeParent].desc}}</p>
           <div class="aWrapper is-size-5 has-text-info">
-            Link: <a :href="slideContent[activeParent].link">{{slideContent[activeParent].link}}</a>
+            Link: <a target="_blank" :href="slideContent[activeParent].link">{{slideContent[activeParent].link}}</a>
           </div>
         </div>
       </div>
