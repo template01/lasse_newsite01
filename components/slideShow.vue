@@ -227,11 +227,14 @@ export default {
     }
 }
 .slideWrapperInner {
+
     img {
         display: block;
     }
     position: relative;
     width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
     // height: 100%;
     height: calc(100vh - 80px - 16px);
     // position: absolute;

@@ -15,6 +15,7 @@
 #Knowledge; desktop:
 
 - Adobe; Photoshop / Illustrator / InDesign
+- App/websketching; Figma
 - Inkscape, Gimp, other FLOSS software
 - Currently using this text editor: Atom
 

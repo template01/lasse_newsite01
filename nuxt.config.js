@@ -3,7 +3,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: 'nuxt-bulma',
+    title: 'LASSE CHRISTENSEN: FULL SPECTRUM DIGITAL DESIGNER',
     meta: [{
         charset: 'utf-8'
       },
@@ -19,8 +19,7 @@ module.exports = {
     ],
     link: [{
         rel: 'icon',
-        type: 'image/x-icon',
-        href: '/favicon.ico'
+        href: '/icon.png'
       },
       {
         rel: 'stylesheet',
@@ -59,19 +58,22 @@ module.exports = {
    ** Customize the progress bar color
    */
   mode: 'spa',
-  loading: {
-    color: '#3B8070'
-  },
+  loading: false,
+  loadingIndicator: '~/static/initloaderspa.html',
+
+  // loading: {
+  //   color: '#3B8070'
+  // },
   modules: [
-  // Simple usage
-  ['nuxt-mq', {
-    breakpoints: {
-      sm: 450,
-      md: 1024,
-      lg: Infinity,
-    }
-  }]
-],
+    // Simple usage
+    ['nuxt-mq', {
+      breakpoints: {
+        sm: 450,
+        md: 1024,
+        lg: Infinity,
+      }
+    }]
+  ],
 
   /*
    ** Build configuration

@@ -17,7 +17,6 @@ export default {
 
 <style>
 html {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -25,6 +24,14 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  -webkit-box-shadow: inset 0px 0px 300px 0px rgba(216,215,220,1);
+  -moz-box-shadow: inset 0px 0px 300px 0px rgba(216,215,220,1);
+  box-shadow: inset 0px 0px 300px 0px rgba(216,215,220,1);
+  margin:0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: rgba(216,215,220,0.5);
 }
 
 *, *:before, *:after {

@@ -2,6 +2,10 @@
 
 Lasse van den Bosch Christensen / 1988 / Danish / Danish (+Swedish,Norwegian), Dutch, English, basic German.
 
+#About:
+
+Lasse has a broad experience as designer, developer and strategist. He finds transitioning between roles as a thinker and as maker really exciting. He is convinced that  being capable of handling communications, conceptualization and implementation is essential in developing modern digital products.
+
 #Education:
 
 2013 - 2015: MA Communications and Design, Piet Zwart Institute, Rotterdam NL (Cum laude)

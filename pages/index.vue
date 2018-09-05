@@ -10,7 +10,7 @@
             <p class="is-size-1-desktop is-size-2-touch" v-html="item.header">
             </p>
           </div>
-          <div v-if="item.component === 'workSlides'">
+          <div v-if="item.component === 'workSlides' && scaleOutComputer">
             <workSlides></workSlides>
           </div>
           <div v-if="item.component === 'cvBegin'">
@@ -20,7 +20,7 @@
             <cv></cv>
           </div>
 
-          <div v-if="item.component === 'pongWrapper' && $mq === 'lg'">
+          <div v-if="item.component === 'pongWrapper' && $mq === 'lg' && readyFirst">
             <div>
               <pongWrapper class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></pongWrapper>
             </div>
@@ -54,21 +54,34 @@ export default {
   data: function() {
     return {
       scrollPosTop: 0,
+      readyFirst: false,
       scaleOutComputer: false,
       sections: sectionContent
     }
   },
   methods: {
-    handleScroll() {
+    handleScroll: function(){
       this.scrollPosTop = window.scrollY;
       if (this.scrollPosTop != 0) {
         this.scaleOutComputer = true
       } else {
         this.scaleOutComputer = false
       }
+    },
+    startComputer: function(){
+      var vm = this
+      var objImg = new Image();
+      objImg.src =  sectionContent[0].background.source;
+
+      objImg.onload = function() {
+                                 /// do some work;
+                                 vm.readyFirst = true
+                              }
+
     }
   },
   mounted() {
+    this.startComputer()
     window.addEventListener('scroll', this.handleScroll);
   },
   destroyed() {
@@ -117,4 +130,6 @@ export default {
 //
 //     opacity: 0;
 // }
+
+
 </style>
