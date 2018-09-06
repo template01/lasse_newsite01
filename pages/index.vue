@@ -1,14 +1,13 @@
 <template>
   <div>
-    <section class="">
+    <section>
       <div :id="section.id" :class="[index===0 ? ($store.state.initGameState ? 'playSlide playScreen':'playSlide playScreenInactive'):'', section.fullHeight?'fullHeight':'', section.background.type === 'solid' ? section.background.class:'']" class="sectionWrapper"
       v-for="(section,index) in sections" :key="'key'+section.id" :style=" [section.background.type === 'image' ? { 'background-position' : section.background.align, 'background-image': 'url(' + section.background.source + ')' }:{},$store.state.initGameState && index===0?{'position':'absolute','z-index':1}:{}]">
       <div :class="section.id!='contact'?'p-40':''" v-for="(item,index) in section.content" :key="index">
         <div class="columns">
           <div v-if="item.header" :class="item.classes">
             <p class="is-size-2-desktop is-size-4-touch" v-if="item.tagline" v-html="item.tagline"></p>
-            <p class="is-size-1-desktop is-size-2-touch" v-html="item.header">
-            </p>
+            <p class="is-size-1-desktop is-size-2-touch" v-html="item.header"></p>
           </div>
           <div v-if="item.component === 'workSlides' && scaleOutComputer">
             <workSlides></workSlides>
