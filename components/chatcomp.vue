@@ -1,24 +1,35 @@
 <template>
 <div>
   <div v-if="!setUser">
-    <input type="text" name="user" v-model="user">
-    <div class="uppercase" @click="setUser = true">
-      OK
+    <input onClick="this.select();" class="is-pulled-left" autocomplete="off" type="text" name="user" maxlength="3" v-model="user" v-on:keyup.enter="submitUser">
+    <div @click="submitUser">
+      <div class="submit has-text-right uppercase is-pulled-left">
+
+        <div class="">
+          OK
+        </div>
+      </div>
     </div>
   </div>
   <div v-if="setUser">
 
 
-    <div>
-      <!-- <input type="text" name="user" v-model="user"> -->
-      <input type="text" name="content" v-model="content">  <div class="uppercase" @click="sendMessage">
-          Send
-        </div>
-    </div>
+
     <div>
       <!-- {{last10chats}} -->
-      <div v-for="message in last10chats" :key="message.id">
+      <!-- {{sortChat}} -->
+      <div v-for="message in sortChat" :key="message.id">
         <span v-html="message.user+': '"></span><span v-html="message.content"></span>
+      </div>
+    </div>
+    <div>
+      <!-- <input type="text" name="user" v-model="user"> -->
+      <input onClick="this.select();" class="is-pulled-left" autocomplete="off" type="text" name="content" maxlength="120" v-model="content" v-on:keyup.enter="sendMessage">
+      <div class="submit has-text-right uppercase is-pulled-left" @click="sendMessage">
+
+        <div class="">
+          Send
+        </div>
       </div>
     </div>
   </div>
@@ -26,24 +37,57 @@
 </div>
 </template>
 <script>
+import _ from 'lodash'
 export default {
   data() {
     return {
-      user: '',
-      content: '',
+      user: 'enter usr name. max 3 letters.',
+      content: 'enter message',
       chat: [],
+      msgLimit: 10,
+      submitUserAllowed: false,
       setUser: false
     }
+  },
+  watch: {
+    'user': function(user) {
+      if (user.toUpperCase() === 'LAS') {
+        this.user = ''
+      } else if (user.length > 3) {
+        this.user = ''
+      } else {
+        if (user.trim().length > 0) {
+          this.submitUserAllowed = true
+        }
+      }
+    }
+
+
   },
   computed: {
     last10chats: function() {
       return this.chat.slice(-10)
+    },
+    sortChat: function() {
+      // return this.chat.sort()
+      return _.sortBy(this.chat, function(dateObj) {
+        return new Date(dateObj.createdAt);
+      });
+
+
     }
   },
   methods: {
+    submitUser: function() {
+      if (this.submitUserAllowed) {
+        this.setUser = true
+        this.$nextTick(() => this.$el.querySelectorAll("input")[0].focus())
+        this.$nextTick(() => this.$el.querySelectorAll("input")[0].select())
+      }
+    },
     getInitChat: function() {
       var vm = this
-      fetch('http://51.15.227.36:1337/chat', {
+      fetch('http://51.15.227.36:1337/chat?_limit=' + vm.msgLimit + '&_sort=createdAt:desc', {
           method: 'get',
         })
         .then((res) => {
@@ -60,6 +104,8 @@ export default {
       // send a post request with our input value
       var vm = this
 
+
+
       fetch('http://51.15.227.36:1337/chat', {
           method: 'post',
           headers: {
@@ -67,11 +113,8 @@ export default {
           },
           body: `user=${this.user}&content=${this.content}`
         })
-        .then((res) => {
-          if (res.status !== 200) return;
-          res.json().then(function(data) {
-            vm.content = 'ass'
-          });
+        .then(function(res) {
+          vm.content = ''
         })
         .catch((err) => console.log('Fetch Error :-S', err));
       // });
@@ -80,6 +123,8 @@ export default {
   },
   mounted() {
     // alert('go')
+    this.$nextTick(() => this.$el.querySelectorAll("input")[0].focus())
+    this.$nextTick(() => this.$el.querySelectorAll("input")[0].select())
     this.getInitChat()
     var vm = this
     const socket = io('http://51.15.227.36:1337/');
@@ -98,6 +143,30 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+input {
+    border: 0;
+    margin: 0;
+    background: transparent;
+    outline: none;
+    width: 80%;
 
+    // border-bottom: 2px solid white;
+}
+.submit {
+    width: 20%;
+}
+.blink {
+    animation: blink-animation 1.5s steps(2, start) infinite;
+}
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
 </style>

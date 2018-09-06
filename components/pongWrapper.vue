@@ -5,6 +5,26 @@
   <!-- <button v-else @click="endGame()">x</button> -->
   <div class="playCanvasInner">
 
+        <div class="cmd" :class="$store.state.initGameState ? 'gameRunningCmdPos':''">
+          <!-- <p :class="$store.state.initGameState ? 'gameRunningFontSize':''" v-if="!ready">
+
+            <span v-if="!showGuide" @click="showGuide = true; initGame()">$ start 2-player pong<span class="blink">▊</span></span>
+            <span v-else @click="ready = true">$ Player 1 use W and S. Player 2 use UP and DOWN<span class="blink">▊</span></span>
+
+          </p> -->
+          <p >
+
+            <span @click="readychat = true">$ start chat<span class="blink">▊</span></span>
+
+          </p>
+          <!-- <p :class="$store.state.initGameState ? 'gameRunningFontSize':''" v-else>
+            <span v-if="!playBegun" @click="startGame()">$ start<span class="blink">▊</span> {{score.a}}:{{score.b}}</span>
+            <span v-else @click="endGame()">$ exit<span class="blink">▊</span> {{score.a}}:{{score.b}}</span>
+          </p> -->
+        </div>
+        <pong @score="setScore($event)" v-if="playBegun"></pong>
+
+<!--
     <div class="cmd" :class="$store.state.initGameState ? 'gameRunningCmdPos':''">
       <p :class="$store.state.initGameState ? 'gameRunningFontSize':''" v-if="!ready">
 
@@ -17,7 +37,7 @@
         <span v-else @click="endGame()">$ exit<span class="blink">▊</span> {{score.a}}:{{score.b}}</span>
       </p>
     </div>
-    <pong @score="setScore($event)" v-if="playBegun"></pong>
+    <pong @score="setScore($event)" v-if="playBegun"></pong> -->
   </div>
 
   <computerLoader v-if="!ready && !showGuide" class="loaderCustom"></computerLoader>
@@ -38,6 +58,7 @@ export default {
       playBegun: false,
       score: {'a':0,'b':0},
       ready: false,
+      readychat: false,
       showGuide: false,
 
     }
