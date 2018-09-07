@@ -1,15 +1,32 @@
 <template>
-<div>
-  <div v-if="!setUser">
-    <input onClick="this.select();" class="is-pulled-left" autocomplete="off" type="text" name="user" maxlength="3" v-model="user" v-on:keyup.enter="submitUser">
-    <div @click="submitUser">
-      <div class="submit has-text-right uppercase is-pulled-left">
+<div class="is-size-5 chatcomp">
 
-        <div class="">
-          OK
+  <div class="robotGuide">
+    <transition-group name="list" tag="div">
+      <div :key="index" v-for="(message,index) in robotMessagesDisplay" class="bubbleWrapper aligner " v-if="!setUser" style="justify-content:flex-end">
+        <div class="bubble">
+          <div>
+            <p class="is-size-6" v-html="'Robot'"></p>
+            <p v-html="message"></p>
+          </div>
+        </div>
+      </div>
+    </transition-group>
+  </div>
+
+  <div class="bubbleWrapper fullwidth" v-if="!setUser">
+    <div class="bubble">
+      <input onClick="this.select();" class="is-size-5 is-pulled-left" autocomplete="off" type="text" name="user" maxlength="16" v-model="user" v-on:keyup.enter="submitUser">
+      <div @click="submitUser">
+        <div class="submit has-text-right uppercase is-pulled-left">
+
+          <div class="">
+            OK
+          </div>
         </div>
       </div>
     </div>
+
   </div>
   <div v-if="setUser">
 
@@ -18,17 +35,28 @@
     <div>
       <!-- {{last10chats}} -->
       <!-- {{sortChat}} -->
-      <div v-for="message in sortChat" :key="message.id">
-        <span v-html="message.user+': '"></span><span v-html="message.content"></span>
-      </div>
-    </div>
-    <div>
-      <!-- <input type="text" name="user" v-model="user"> -->
-      <input onClick="this.select();" class="is-pulled-left" autocomplete="off" type="text" name="content" maxlength="120" v-model="content" v-on:keyup.enter="sendMessage">
-      <div class="submit has-text-right uppercase is-pulled-left" @click="sendMessage">
+      <transition-group name="list" tag="div">
+        <div class="bubbleWrapper aligner" :style="message.user.toUpperCase() === 'LASSE' ? {'justify-content': 'flex-end'}:{'justify-content': 'flex-start'}" v-for="message in sortChat" :key="message.id">
+          <div class="bubble">
+            <div>
+              <p class="is-size-6" v-html="safeContent(message.user)">
 
-        <div class="">
-          Send
+              </p>
+              <p v-html="safeContent(message.content)"></p>
+            </div>
+          </div>
+        </div>
+      </transition-group>
+    </div>
+    <div class="bubbleWrapper fullwidth">
+      <div class="bubble">
+        <!-- <input type="text" name="user" v-model="user"> -->
+        <input onClick="this.select();" class="is-size-5 is-pulled-left" autocomplete="off" type="text" name="content" maxlength="120" v-model="content" v-on:keyup.enter="sendMessage">
+        <div class="submit has-text-right uppercase is-pulled-left" @click="sendMessage">
+
+          <div class="">
+            Send
+          </div>
         </div>
       </div>
     </div>
@@ -38,26 +66,40 @@
 </template>
 <script>
 import _ from 'lodash'
+import striptags from 'striptags'
+
 export default {
   data() {
     return {
-      user: 'enter usr name. max 3 letters.',
+      user: 'enter name',
       content: 'enter message',
       chat: [],
-      msgLimit: 10,
+      msgLimit: 30,
       submitUserAllowed: false,
-      setUser: false
+      setUser: false,
+      lasseAllowed: false,
+      robotMessages: ['Hi There!','You found the secret chat room!', 'I tried to notify Lasse. Hopefully he will be online asap!', 'How about filling in a name?', "When you're ready hit enter..."],
+      robotMessagesDisplay: []
+
     }
   },
   watch: {
-    'user': function(user) {
-      if (user.toUpperCase() === 'LAS') {
+    'user': function(user, userbefore) {
+      if (user.toUpperCase() === 'LASSE' && !this.lasseAllowed) {
         this.user = ''
-      } else if (user.length > 3) {
+      } else if (user.length > 16) {
         this.user = ''
+      } else if (user === '@lasse') {
+        this.lasseAllowed = true
+        this.user = 'Lasse'
       } else {
         if (user.trim().length > 0) {
-          this.submitUserAllowed = true
+          if(user === ''){
+            this.submitUserAllowed = false
+          }else{
+            this.submitUserAllowed = true
+
+          }
         }
       }
     }
@@ -65,6 +107,7 @@ export default {
 
   },
   computed: {
+
     last10chats: function() {
       return this.chat.slice(-10)
     },
@@ -78,6 +121,26 @@ export default {
     }
   },
   methods: {
+
+    addRobotMessage: function() {
+
+      var vm = this
+      var index = 0
+      var delay = 800;
+      var myFunction = function() {
+        delay = 200 + Math.floor(Math.random() * 1600) + 1000;
+        vm.robotMessagesDisplay.push(vm.robotMessages[index])
+        index = index + 1
+        if (index < vm.robotMessages.length) {
+          setTimeout(myFunction, delay);
+        }
+      }
+      setTimeout(myFunction, delay);
+
+    },
+    safeContent: function(input) {
+      return striptags(input)
+    },
     submitUser: function() {
       if (this.submitUserAllowed) {
         this.setUser = true
@@ -139,17 +202,65 @@ export default {
       vm.getInitChat()
     });
 
+
+    this.addRobotMessage()
+
   }
 }
 </script>
 
 <style lang="scss" scoped>
+* {
+    color: grey;
+}
+
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.25s;
+}
+/* .list-leave-active below version 2.1.8 */
+.list-enter,
+.list-leave-to {
+    transform: translateY(5px);
+    opacity: 0.8;
+}
+
+.bubbleWrapper {
+
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: 100%;
+    &.fullwidth {
+        .bubble {
+            width: 100%;
+            line-height: 46px;
+        }
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+    .bubble {
+        border-radius: 23px;
+        display: inline-block;
+        min-height: 46px;
+        min-width: 46px;
+        // line-height: 46px;
+        padding: 6px 16px;
+        background: white;
+
+    }
+}
 input {
+    &::selection {
+        color: inherit;
+    }
     border: 0;
     margin: 0;
     background: transparent;
     outline: none;
     width: 80%;
+    line-height: inherit;
+    font-size: inherit;
 
     // border-bottom: 2px solid white;
 }

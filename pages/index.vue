@@ -1,54 +1,65 @@
 <template>
-  <div>
-    <section>
-      <div :id="section.id" :class="[index===0 ? ($store.state.initGameState ? 'playSlide playScreen':'playSlide playScreenInactive'):'', section.fullHeight?'fullHeight':'', section.background.type === 'solid' ? section.background.class:'']" class="sectionWrapper"
-      v-for="(section,index) in sections" :key="'key'+section.id" :style=" [section.background.type === 'image' ? { 'background-position' : section.background.align, 'background-image': 'url(' + section.background.source + ')' }:{},$store.state.initGameState && index===0?{'position':'absolute','z-index':1}:{}]">
-      <div :class="section.id!='contact'?'p-40':''" v-for="(item,index) in section.content" :key="index">
-        <div class="columns">
-          <div v-if="item.header" :class="item.classes">
-            <p class="is-size-2-desktop is-size-4-touch" v-if="item.tagline" v-html="item.tagline"></p>
-            <p class="is-size-1-desktop is-size-2-touch" v-html="item.header"></p>
-          </div>
-          <div v-if="item.component === 'workSlides' && scaleOutComputer">
-            <workSlides></workSlides>
-          </div>
-          <div v-if="item.component === 'cvBegin'">
-            <cvBegin></cvBegin>
-          </div>
-          <div v-if="item.component === 'cv'" :class="item.classes">
-            <cv></cv>
-          </div>
+<div>
+  <section>
+    <div :id="section.id" v-for="(section,index) in sections" :key="'key'+section.id">
 
-          <div v-if="item.component === 'pongWrapper' && $mq === 'lg' && readyFirst">
-            <div>
-              <pongWrapper class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></pongWrapper>
+
+      <div :class="[section.fullHeight?'fullHeight':'', section.background.type === 'solid' ? section.background.class:'']" class="sectionWrapper" :style=" [index===0 ? ($store.state.chatOpen ? {'transform':'translateX(-500px)'}:{}):{},section.background.type === 'image' ? { 'background-position' : section.background.align, 'background-image': 'url(' + section.background.source + ')' }:{}]">
+        <div :class="section.id!='contact'?'p-40':''" v-for="(item,index) in section.content" :key="index">
+          <div class="columns">
+            <div v-if="item.header" :class="item.classes">
+              <p class="is-size-2-desktop is-size-4-touch" v-if="item.tagline" v-html="item.tagline"></p>
+              <p class="is-size-1-desktop is-size-2-touch" v-html="item.header"></p>
             </div>
-          </div>
+            <div v-if="item.component === 'workSlides' && scaleOutComputer">
+              <workSlides></workSlides>
+            </div>
+            <div v-if="item.component === 'cvBegin'">
+              <cvBegin></cvBegin>
+            </div>
+            <div v-if="item.component === 'cv'" :class="item.classes">
+              <cv></cv>
+            </div>
 
+            <div v-if="item.component === 'pongWrapper' && $mq === 'lg' && readyFirst">
+              <div>
+                <chatInit class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></chatInit>
+                <!-- <pongWrapper class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></pongWrapper> -->
+              </div>
+            </div>
+
+          </div>
         </div>
+      </div>
+      <div v-if="index===0 && readyFirst" >
+          <chatwrapper></chatwrapper>
       </div>
     </div>
     <contact></contact>
 
   </section>
-  </div>
+</div>
 </template>
 
 <script>
 import sectionContent from '~/static/content/sectionContent.json'
 
 import pongWrapper from '~/components/pongWrapper'
+import chatInit from '~/components/chatInit'
 import cvBegin from '~/components/cvBegin'
 import cv from '~/components/cv'
 import contact from '~/components/contact'
 import workSlides from '~/components/workSlides'
+import chatwrapper from '~/components/chatwrapper'
 export default {
   components: {
     cvBegin,
     cv,
     contact,
     pongWrapper,
-    workSlides
+    chatInit,
+    workSlides,
+    chatwrapper
   },
   data: function() {
     return {
@@ -59,7 +70,7 @@ export default {
     }
   },
   methods: {
-    handleScroll: function(){
+    handleScroll: function() {
       this.scrollPosTop = window.scrollY;
       if (this.scrollPosTop != 0) {
         this.scaleOutComputer = true
@@ -67,15 +78,15 @@ export default {
         this.scaleOutComputer = false
       }
     },
-    startComputer: function(){
+    startComputer: function() {
       var vm = this
       var objImg = new Image();
-      objImg.src =  sectionContent[0].background.source;
+      objImg.src = sectionContent[0].background.source;
 
       objImg.onload = function() {
-                                 /// do some work;
-                                 vm.readyFirst = true
-                              }
+        /// do some work;
+        vm.readyFirst = true
+      }
 
     }
   },
@@ -94,6 +105,7 @@ export default {
 .sectionWrapper {
     position: relative;
     overflow: hidden;
+    transition: transform 0.25s ease-in-out;
 }
 .playScreen {
     transform: scale(3) translateY(-31.5vh) translateX(-28vw);
@@ -129,6 +141,4 @@ export default {
 //
 //     opacity: 0;
 // }
-
-
 </style>
