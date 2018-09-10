@@ -5,7 +5,7 @@
       <div :key="index" v-for="(message,index) in robotMessagesDisplay" class="bubbleWrapper aligner " v-if="!setUser" style="justify-content:flex-end">
         <div class="bubble" :style="lockUser? {'opacity':'1'}:{}">
           <div>
-            <p class="is-size-6" v-html="'Robot'"></p>
+            <p class="is-size-7 is-size-7-touch" v-html="'Robot'"></p>
             <p class="is-size-5-desktop is-size-6-touch is-pulled-left" v-html="message"></p>
           </div>
         </div>
@@ -38,7 +38,7 @@
         <div class="bubbleWrapper aligner" :style="message.user.toUpperCase() === 'LASSE' ? {'justify-content': 'flex-end'}:{'justify-content': 'flex-start'}" v-for="(message,index) in sortChat" :key="'message'+index">
           <div class="bubble">
             <div>
-              <p class="is-size-6" v-html="safeContent(message.user)">
+              <p class="is-size-7 is-size-7-touch" v-html="safeContent(message.user)">
 
               </p>
               <p v-html="safeContent(message.content)"></p>
@@ -182,9 +182,12 @@ export default {
       if (this.submitUserAllowed) {
         this.lockUser = true
         this.$nextTick(() => this.$el.querySelectorAll("input")[0].blur())
-        this.robotMessagesDisplay.push(this.robotMessageFetch[0])
+        this.robotMessagesDisplay=[]
         this.fetchInit = true
         var vm = this
+        setTimeout(function() {
+          vm.robotMessagesDisplay.push(vm.robotMessageFetch[0])
+        }, 250)
         setTimeout(function() {
           vm.robotMessagesDisplay.push(vm.robotMessageFetch[1])
         }, 1250)
