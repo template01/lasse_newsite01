@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 const createStore = () => {
   return new Vuex.Store({
     state: {
+      rootChatServer: 'http://51.15.227.36:1337/',
       initGameState: false,
       chatOpen: false,
       scrollPosTop: 0,

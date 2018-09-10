@@ -11,6 +11,7 @@
     "background": {
       "type": "image",
       "source": "/img/bg/federica-galli-449563-unsplash_right_sm.jpg",
+      "sourcemobile": "/img/bg/federica-galli-449563-unsplash_right_sm_mobile.jpg",
       "align":"top bottom"
     }
 
@@ -41,7 +42,8 @@
     ],
     "background": {
       "type": "image",
-      "source": "/img/bg/sander.jpg",
+      "source": "/img/bg/sanderDark.jpg",
+      "sourcemobile": "/img/bg/sanderDark.jpg",
       "align":"center center"
     }
   }, {
@@ -72,6 +74,7 @@
     "background": {
       "type": "image",
       "source": "/img/bg/lasse.jpg",
+      "sourcemobile":  "/img/bg/lasse.jpg",
       "align":"top center"
     }
   },

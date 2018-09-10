@@ -4,7 +4,7 @@
     <div :id="section.id" v-for="(section,index) in sections" :key="'key'+section.id">
 
 
-      <div :class="[section.fullHeight?'fullHeight':'', section.background.type === 'solid' ? section.background.class:'']" class="sectionWrapper" :style=" [index===0 ? ($store.state.chatOpen ? {'transform':'translateX(-500px)'}:{}):{},section.background.type === 'image' ? { 'background-position' : section.background.align, 'background-image': 'url(' + section.background.source + ')' }:{}]">
+      <div :class="[section.fullHeight?'fullHeight':'', section.background.type === 'solid' ? section.background.class:'']" class="sectionWrapper" :style=" [index===0 ? ($store.state.chatOpen ? {'transform':'translateX(-500px)'}:{}):{}, section.background.type === 'image' ? {'background-image': 'url(' + determainSource(section.background.source,  section.background.sourcemobile)  + ')' }:{} ,section.background.type === 'image' ? { 'background-position' : section.background.align}:{}]">
         <div :class="section.id!='contact'?'p-40':''" v-for="(item,index) in section.content" :key="index">
           <div class="columns">
             <div v-if="item.header" :class="item.classes">
@@ -24,6 +24,13 @@
             <div v-if="item.component === 'pongWrapper' && $mq === 'lg' && readyFirst">
               <div>
                 <chatInit class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></chatInit>
+                <!-- <pongWrapper class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></pongWrapper> -->
+              </div>
+            </div>
+
+            <div v-if="item.component === 'pongWrapper' && $mq != 'lg' && readyFirst">
+              <div>
+                <chatInit :mobile="true" :class="scaleOutComputer?'scaleOutComputer':''"></chatInit>
                 <!-- <pongWrapper class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></pongWrapper> -->
               </div>
             </div>
@@ -70,6 +77,13 @@ export default {
     }
   },
   methods: {
+    determainSource: function(desktopsource,mobilesource){
+      if(this.$mq === 'lg'){
+        return desktopsource
+      }else{
+        return mobilesource
+      }
+    },
     handleScroll: function() {
       this.scrollPosTop = window.scrollY;
       this.$store.commit('SET_SCROLLPOSTOP',this.scrollPosTop)

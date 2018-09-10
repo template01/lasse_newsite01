@@ -75,10 +75,17 @@ a{
   line-height: 1 ;
   text-transform: uppercase;
 }
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 1400px) and (max-width: 1799px) {
 
   *[class^='is-size-1']{
     font-size: 110px !important;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+
+  *[class^='is-size-1']{
+    font-size: 130px !important;
   }
 }
 

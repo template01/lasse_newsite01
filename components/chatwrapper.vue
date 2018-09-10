@@ -1,14 +1,14 @@
 <template>
-<div class="chatwrapper " :style="setZindex ? {'z-index':'10'}:{'z-index':'-1'}">
+<div class="chatwrapper " :class=" $mq != 'lg' ? 'mobile':''" :style="setZindex ? {'z-index':'10'}:{'z-index':'-1'}">
 
-  <chatcomp class="p-10" id="chatcomp" v-if="chatOpenComputed"></chatcomp>
+  <chatcomp class="" :class=" $mq != 'lg' ? 'p-20':'p-10'" id="chatcomp" v-if="chatOpenComputed"></chatcomp>
   <div class="gradientfade">
   </div>
   <div>
 
   </div>
   <div class="closeChat">
-    <div class=" p-10">
+    <div :class=" $mq != 'lg' ? 'p-20':'p-10'">
 
       <div class=" " @click="$store.commit('SET_CHAT_STATE', false)">
         <div class="endSlideshow is-pulled-left">
@@ -90,6 +90,8 @@ export default {
 }
 
 .chatwrapper {
+
+
     .closeChat {
         position: absolute;
         height: 60px;
@@ -118,6 +120,9 @@ export default {
         position: absolute;
         bottom: 0;
         width: 100%;
+    }
+    &.mobile{
+      width: 100%;
     }
 }
 </style>
