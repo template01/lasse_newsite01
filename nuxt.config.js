@@ -33,7 +33,7 @@ module.exports = {
     script: [{
         src: 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js'
       },{
-        src:'https://cdn.polyfill.io/v2/polyfill.min.js'
+        src:'/js/polyfill.min.js'
       }]
 
 
