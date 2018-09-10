@@ -148,19 +148,18 @@ export default {
 }
 .slideShowWrapper {
     position: relative;
-}
-.nextSlide {
-    cursor: pointer;
+    .nextSlide {
+      cursor: pointer;
 
-    .nextSlideInner{
-      width: 40px;
-      height: 30px;
-      transform: translateX(-16px) translateY(10px);
+      .nextSlideInner{
+        width: 40px;
+        height: 30px;
+        transform: translateX(-16px) translateY(10px);
 
-    }
+      }
 
-    position: relative;
-    span {
+      position: relative;
+      span {
         width: 5px;
         background: white;
         height: 100%;
@@ -168,21 +167,22 @@ export default {
         transform-origin: center;
         left: 34px;
         top: -11px;
-    }
-    span:nth-of-type(1) {
+      }
+      span:nth-of-type(1) {
         transform: rotate(45deg);
         height: 60%;
         left: 44px;
         top: 0;
-    }
-    span:nth-of-type(2) {
+      }
+      span:nth-of-type(2) {
         transform: rotate(-45deg);
         height: 60%;
         left: 44px;
         top: -9px;
-    }
-    span:nth-of-type(3) {
+      }
+      span:nth-of-type(3) {
         transform: rotate(90deg);
+      }
     }
 }
 .endSlideshow {

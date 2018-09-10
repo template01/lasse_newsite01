@@ -1,7 +1,31 @@
 <template>
-  <div>
+<div>
 
-    <div :class="workSlideOpen ? 'workSlideOpen':''" class="workSlide">
+  <div :class="workSlideOpen ? 'workSlideOpen':''" class="workSlide" :style="{'transform':'translate3d('+workslideLeft+'%, 0,0)'}">
+    <div class="workSlides" :class="[workSlideOpen ? 'workSlidesOpen':'', setBackgroundColor]" :style="$mq != 'lg' ?{'left':'15%'}:{}">
+
+      <div @click="startSlide" class="" v-if="!hideStartButton && $mq === 'lg'">
+        <div class="p-40">
+
+          <div class="is-size-2-desktop is-size-4-touch">
+            <div class="initSlideshow aligner ">
+            <div class="initSlideshowInner">
+              <span class="initSlideshowText pr-10">Have a look</span>
+              <div class="nextSlide">
+                <div class="nextSlideInner"><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <slideShow @setColor="setBackgroundColor = $event" @endSlideshow="endSlideshow" v-if="hideStartButton && $mq === 'lg'"></slideShow>
+      <slideShowMobile @setColor="setBackgroundColor = $event" @endSlideshow="endSlideshow" v-if="hideStartButton && $mq != 'lg'"></slideShowMobile>
+    </div>
+
+  </div>
+
+  <!-- <div :class="workSlideOpen ? 'workSlideOpen':''" class="workSlide">
       <div class="workSlides" :class="[workSlideOpen ? 'workSlidesOpen':'', setBackgroundColor]" :style="$mq != 'lg' ?{'left':'15%'}:{}" >
 
         <slideShow @setColor="setBackgroundColor = $event" @endSlideshow="endSlideshow" v-if="hideStartButton && $mq === 'lg'"></slideShow>
@@ -17,23 +41,26 @@
         </div>
       </div>
 
+    </div> -->
+  <div @click="startSlide" class="startWrapperMobile" v-if="$mq != 'lg'">
+    <div class="startMobile aligner uppercase has-text-info is-size-4" :class="setBackgroundColor">
+      Have a look
     </div>
-    <div @click="startSlide" class="startWrapperMobile" v-if="$mq != 'lg'">
-      <div class="startMobile aligner uppercase has-text-info is-size-4" :class="setBackgroundColor">
-        Have a look
-      </div>
 
-    </div>
   </div>
+</div>
 </template>
 
 <script>
 import slideShowMobile from '~/components/slideShowMobile'
 import slideShow from '~/components/slideShow'
 import slideContentJson from '~/static/content/slideshowContent.json'
+import {
+  mapGetters
+} from 'vuex'
 
 export default {
-  components:{
+  components: {
     slideShow,
     slideShowMobile
   },
@@ -42,6 +69,20 @@ export default {
       hideStartButton: false,
       workSlideOpen: false,
       setBackgroundColor: slideContentJson[0].color
+    }
+  },
+  computed: {
+    ...mapGetters({
+      getScrollPosTop: 'GET_SCROLLPOSTOP'
+    }),
+    workslideLeft: function(){
+      var left = 0
+      if(100 - (this.getScrollPosTop/35) > 75){
+        left = 100 - (this.getScrollPosTop/50)
+      }else{
+        left = 75
+      }
+      return left
     }
   },
   methods: {
@@ -54,29 +95,31 @@ export default {
       }
     },
     startSlide: function() {
-      document.querySelector('#work').scrollIntoView({ behavior: 'smooth' });
+      document.querySelector('#work').scrollIntoView({
+        behavior: 'smooth'
+      });
       this.toggleScroll(true)
       this.workSlideOpen = true
       var vm = this
-      setTimeout(function(){
+      setTimeout(function() {
         vm.hideStartButton = true
-      },150)
+      }, 150)
     },
-    endSlideshow: function(){
+    endSlideshow: function() {
       this.toggleScroll(false)
       this.workSlideOpen = false
       var vm = this
-      setTimeout(function(){
+      setTimeout(function() {
         vm.hideStartButton = false
-      },150)
+      }, 150)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.workSlideOpen{
-  transform: translateX(0vw) !important;
+.workSlideOpen {
+    transform: translateX(0vw) !important;
 
 }
 .workSlide {
@@ -86,28 +129,81 @@ export default {
     top: 0;
     z-index: 1;
     width: 100%;
-    transform: translateX(85%);
+    // transform: translateX(85%);
+    transform: translate3d(100%, 0,0);
     transition: all 0.25s ease-in-out;
 
-
-
-
-    .workSlidesOpen{
-      left:0 !important;
+    .workSlidesOpen {
+        left: 0 !important;
+        border-radius: 0% !important;
     }
     .workSlides {
-      transition: all 0.25s ease-in-out;
-      width: 100%;
-      position: absolute;
-      height: 100%;
-      left: 10%;
-      top: 0;
+        border-radius: 100vh 0vh 0vh 100vh;
+        transition: all 0.25s ease-in-out;
+        width: 100%;
+        position: absolute;
+        height: 100%;
+        // left: 10%;
+        top: 0;
+
+        .initSlideshow {
+          cursor: pointer;
+          position: absolute;
+          width: 25vw;
+          color: white;
+          height: 100%;
+          top:0;
+          left: 0;
+          .initSlideshowInner{
+            width: 100%;
+            text-align: center;
+          }
+            .initSlideshowText {
+            }
+            .nextSlide {
+                cursor: pointer;
+                position: relative;
+                display: inline-block;
+
+                .nextSlideInner {
+                    width: 40px;
+                    height: 30px;
+                    transform: translateX(-16px) translateY(12px);
+
+                }
+                span {
+                    width: 5px;
+                    background: white;
+                    height: 100%;
+                    position: absolute;
+                    transform-origin: center;
+                    left: 34px;
+                    top: -11px;
+                }
+                span:nth-of-type(1) {
+                    transform: rotate(45deg);
+                    height: 60%;
+                    left: 44px;
+                    top: 0;
+                }
+                span:nth-of-type(2) {
+                    transform: rotate(-45deg);
+                    height: 60%;
+                    left: 44px;
+                    top: -9px;
+                }
+                span:nth-of-type(3) {
+                    transform: rotate(90deg);
+                }
+            }
+        }
+
     }
 
-    .startWrapper{
-      position: absolute;
-left: 0;
-height: 100%;
+    .startWrapper {
+        position: absolute;
+        left: 0;
+        height: 100%;
     }
     .start {
         cursor: pointer;
@@ -120,7 +216,6 @@ height: 100%;
         transform: translateX(5vw) translateY(-10vh);
         transition: all 0.25s ease-in-out;
         transform-origin: center;
-
         &:hover {
             transform: translateX(4vw) translateY(-10vh);
 
@@ -153,12 +248,12 @@ height: 100%;
     }
 
 }
-.startWrapperMobile{
-  position: absolute;
-left: 0;
-bottom: 0;
-height: 25%;
-width:  100%;
+.startWrapperMobile {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 25%;
+    width: 100%;
 }
 .startMobile {
     cursor: pointer;
@@ -191,6 +286,4 @@ width:  100%;
         min-height: 60px;
     }
 }
-
-
 </style>

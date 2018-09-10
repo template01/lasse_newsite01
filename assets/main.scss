@@ -75,6 +75,12 @@ a{
   line-height: 1 ;
   text-transform: uppercase;
 }
+@media only screen and (min-width: 1400px) {
+
+  *[class^='is-size-1']{
+    font-size: 110px !important;
+  }
+}
 
 .fullHeight{
   height: 100vh;

@@ -1,6 +1,5 @@
 <template>
 <div class="is-size-5 chatcomp">
-
   <div class="robotGuide">
     <transition-group name="list" tag="div">
       <div :key="index" v-for="(message,index) in robotMessagesDisplay" class="bubbleWrapper aligner " v-if="!setUser" style="justify-content:flex-end">
@@ -67,6 +66,9 @@
 <script>
 import _ from 'lodash'
 import striptags from 'striptags'
+import {
+  mapGetters
+} from 'vuex'
 
 export default {
   data() {
@@ -78,16 +80,26 @@ export default {
       submitUserAllowed: false,
       setUser: false,
       lasseAllowed: false,
-      robotMessages: ['Hi There!','You found the secret chat room!', 'I tried to notify Lasse. Hopefully he will be online asap!', 'How about filling in a name?', "When you're ready hit enter..."],
+      fetchInit: false,
+      robotMessages: ['Hi There!','You found the secret chat room!', 'How about filling in a name?', 'I tried to notify Lasse. Hopefully he will be online asap!', "When you're ready hit enter..."],
+      robotMessagesChatHasRun: ["You're back! Go get em.","Please enter your name again!"],
+      robotMessageFetch:['Cool! Just fetching the previous chat!','...'],
       robotMessagesDisplay: []
 
     }
   },
   watch: {
+    'content':function(content,contentBefore){
+      if (contentBefore==='enter message') {
+        this.content = ''
+      }
+    },
     'user': function(user, userbefore) {
       if (user.toUpperCase() === 'LASSE' && !this.lasseAllowed) {
         this.user = ''
       } else if (user.length > 16) {
+        this.user = ''
+      } else if (userbefore === 'enter name') {
         this.user = ''
       } else if (user === '@lasse') {
         this.lasseAllowed = true
@@ -107,7 +119,9 @@ export default {
 
   },
   computed: {
-
+    ...mapGetters({
+      getChatFirstRun: 'GET_CHAT_FIRST_RUN'
+    }),
     last10chats: function() {
       return this.chat.slice(-10)
     },
@@ -122,20 +136,42 @@ export default {
   },
   methods: {
 
+    pingLasse: function(){
+      fetch('http://51.15.227.36:1337/pinglasse/sendmail', {
+          method: 'get',
+        })
+        .then((res) => {
+          // if (res.status !== 200) return;
+          // res.json().then(function(data) {
+          //   vm.chat = data
+          // });
+        })
+        .catch((err) => console.log('Fetch Error :-S', err));
+    },
+
     addRobotMessage: function() {
 
       var vm = this
       var index = 0
-      var delay = 800;
-      var myFunction = function() {
-        delay = 200 + Math.floor(Math.random() * 1600) + 1000;
-        vm.robotMessagesDisplay.push(vm.robotMessages[index])
-        index = index + 1
-        if (index < vm.robotMessages.length) {
-          setTimeout(myFunction, delay);
+      var delay = 2000;
+      var messages
+      if(vm.getChatFirstRun){
+        messages = vm.robotMessages
+      }else{
+        messages = vm.robotMessagesChatHasRun
+      }
+      var robotLoop = function() {
+        if(!vm.fetchInit){
+
+          delay = 0 + Math.floor(Math.random() * 1600) + 1000;
+          vm.robotMessagesDisplay.push(messages[index])
+          index = index + 1
+          if (index < messages.length) {
+            setTimeout(robotLoop, delay);
+          }
         }
       }
-      setTimeout(myFunction, delay);
+      setTimeout(robotLoop, delay);
 
     },
     safeContent: function(input) {
@@ -143,9 +179,19 @@ export default {
     },
     submitUser: function() {
       if (this.submitUserAllowed) {
-        this.setUser = true
+
+        this.robotMessagesDisplay.push(this.robotMessageFetch[0])
+        this.fetchInit = true
+        var vm = this
+        setTimeout(function(){
+          vm.robotMessagesDisplay.push(vm.robotMessageFetch[1])
+        },1000)
+        setTimeout(function(){
+          vm.setUser = true
+        },2500)
+
         this.$nextTick(() => this.$el.querySelectorAll("input")[0].focus())
-        this.$nextTick(() => this.$el.querySelectorAll("input")[0].select())
+        // this.$nextTick(() => this.$el.querySelectorAll("input")[0].select())
       }
     },
     getInitChat: function() {
@@ -185,9 +231,11 @@ export default {
 
   },
   mounted() {
-    // alert('go')
+    if(this.getChatFirstRun){
+      this.pingLasse()
+    }
     this.$nextTick(() => this.$el.querySelectorAll("input")[0].focus())
-    this.$nextTick(() => this.$el.querySelectorAll("input")[0].select())
+    // this.$nextTick(() => this.$el.querySelectorAll("input")[0].select())
     this.getInitChat()
     var vm = this
     const socket = io('http://51.15.227.36:1337/');
@@ -225,6 +273,14 @@ export default {
     opacity: 0.8;
 }
 
+.robotGuide{
+  .bubble {
+    opacity: 0.55;
+      // background: purple !important;
+
+  }
+}
+
 .bubbleWrapper {
 
     margin-top: 8px;
@@ -252,7 +308,7 @@ export default {
 }
 input {
     &::selection {
-        color: inherit;
+        // color: inherit;
     }
     border: 0;
     margin: 0;
