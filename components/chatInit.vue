@@ -92,6 +92,8 @@ export default {
     }
     &.mobile {
 
+        outline: none;
+
         .loaderCustom {
             height: 100%;
             width: 100%;
