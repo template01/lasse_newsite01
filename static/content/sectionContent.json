@@ -6,7 +6,7 @@
       "classes": "column is-5 has-text-info ",
       "tagline": "Lasse Christensen"
     }, {
-      "component": "pongWrapper"
+      "component": "chatInit"
     }],
     "background": {
       "type": "image",

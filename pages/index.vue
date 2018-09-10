@@ -21,17 +21,15 @@
               <cv></cv>
             </div>
 
-            <div v-if="item.component === 'pongWrapper' && $mq === 'lg' && readyFirst">
+            <div v-if="item.component === 'chatInit' && $mq === 'lg' && readyFirst">
               <div>
                 <chatInit class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></chatInit>
-                <!-- <pongWrapper class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></pongWrapper> -->
               </div>
             </div>
 
-            <div v-if="item.component === 'pongWrapper' && $mq != 'lg' && readyFirst">
+            <div v-if="item.component === 'chatInit' && $mq != 'lg' && readyFirst">
               <div>
                 <chatInit :mobile="true" :class="scaleOutComputer?'scaleOutComputer':''"></chatInit>
-                <!-- <pongWrapper class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></pongWrapper> -->
               </div>
             </div>
 
@@ -51,7 +49,6 @@
 <script>
 import sectionContent from '~/static/content/sectionContent.json'
 
-import pongWrapper from '~/components/pongWrapper'
 import chatInit from '~/components/chatInit'
 import cvBegin from '~/components/cvBegin'
 import cv from '~/components/cv'
@@ -63,7 +60,6 @@ export default {
     cvBegin,
     cv,
     contact,
-    pongWrapper,
     chatInit,
     workSlides,
     chatwrapper
