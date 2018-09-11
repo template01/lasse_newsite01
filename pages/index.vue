@@ -83,7 +83,7 @@ export default {
     handleScroll: function() {
       this.scrollPosTop = window.scrollY;
       this.$store.commit('SET_SCROLLPOSTOP',this.scrollPosTop)
-      if (this.scrollPosTop != 0) {
+      if (this.scrollPosTop > 20) {
         this.scaleOutComputer = true
       } else {
         this.scaleOutComputer = false

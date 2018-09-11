@@ -71,7 +71,8 @@ export default {
     return {
       hideStartButton: false,
       workSlideOpen: false,
-      setBackgroundColor: slideContentJson[0].color
+      setBackgroundColor: slideContentJson[0].color,
+      slideContent: slideContentJson
     }
   },
   computed: {
@@ -88,7 +89,20 @@ export default {
       return left
     }
   },
+  watch:{
+    getScrollPosTop:function(getScrollPosTop){
+      if(getScrollPosTop>400){
+        this.preloadSlides()
+      }
+    }
+  },
   methods: {
+    preloadSlides:function(){
+      var objImg = new Image();
+      objImg.src = this.slideContent[0].slides[0].content[0].source;
+      var objImg = new Image();
+      objImg.src = this.slideContent[0].slides[0].content[1].source;
+    },
     toggleScroll: function(toggle) {
       if (toggle) {
         document.documentElement.style.overflowY = "hidden";
