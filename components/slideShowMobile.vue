@@ -34,7 +34,7 @@
                 </div>
                 <p class="is-size-5 has-text-info mb-40">{{slide.desc}}</p>
                 <div class="aWrapper is-size-5 has-text-info">
-                  Link: <a target="_blank" :href="slide.link">{{slide.link}}</a>
+                  <a target="_blank" :href="slide.link">Visit the site</a>
                 </div>
               </swiper-slide>
               <template v-for="(slideContent,slideIndex) in slide.slides" >
@@ -266,13 +266,7 @@ img{
     }
 
     .aWrapper {
-        white-space: nowrap;
-        max-width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        a {
-            display: inline-block;
-        }
+        border-bottom: 1px solid white;
     }
 }
 

@@ -22,14 +22,12 @@ export default {
     var converter = new showdown.Converter()
     fetch('/content/cvCol01.md').then(function(response) {
     return response.text().then(function(text) {
-      console.log(text)
         var html = converter.makeHtml(text);
         vm.result1 = html;
     });
   })
   fetch('/content/cvCol02.md').then(function(response) {
   return response.text().then(function(text) {
-    console.log(text)
       var html = converter.makeHtml(text);
       vm.result2 = html;
   });

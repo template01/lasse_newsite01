@@ -28,7 +28,7 @@
           </div>
           <p class="is-size-5 has-text-info mb-20">{{slideContent[activeParent].desc}}</p>
           <div class="aWrapper is-size-5 has-text-info">
-            Link: <a target="_blank" :href="slideContent[activeParent].link">{{slideContent[activeParent].link}}</a>
+            <a target="_blank" :href="slideContent[activeParent].link">Visit the site</a>
           </div>
         </div>
       </div>
@@ -334,13 +334,7 @@ export default {
     }
 
     .aWrapper {
-        white-space: nowrap;
-        max-width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        a {
-            display: inline-block;
-        }
+        border-bottom: 1px solid white;
     }
 }
 // .slide-up{
