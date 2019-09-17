@@ -1,8 +1,8 @@
 <template>
 <div>
 
-  <div :class="workSlideOpen ? 'workSlideOpen':''" class="workSlide" :style="{'transform':'translate3d('+workslideLeft+'%, 0,0)'}">
-    <div class="workSlides" :class="[workSlideOpen ? 'workSlidesOpen':'', setBackgroundColor]" :style="$mq != 'lg' ?{'left':'15%'}:{}">
+  <div :class="workSlideOpen ? 'workSlideOpen':''" class="workSlide" :style="$mq === 'lg' ? {'transform':'translate3d('+workslideLeft+'%, 0,0)'}:{}">
+    <div class="workSlides" :class="[workSlideOpen ? 'workSlidesOpen':'', setBackgroundColor]" :style="$mq != 'lg' ?{'border-radius':'0'}:{}">
 
       <div @click="startSlide" class="" v-if="!hideStartButton && $mq === 'lg'">
         <div class="p-40">
@@ -45,6 +45,9 @@
   <div @click="startSlide" class="startWrapperMobile" v-if="$mq != 'lg'">
     <div class="startMobile aligner uppercase has-text-info is-size-4" :class="setBackgroundColor">
       Have a look
+      <div class="nextSlide">
+        <div class="nextSlideInner small"><span></span><span></span><span></span></div>
+      </div>
     </div>
 
   </div>
@@ -68,7 +71,8 @@ export default {
     return {
       hideStartButton: false,
       workSlideOpen: false,
-      setBackgroundColor: slideContentJson[0].color
+      setBackgroundColor: slideContentJson[0].color,
+      slideContent: slideContentJson
     }
   },
   computed: {
@@ -78,14 +82,27 @@ export default {
     workslideLeft: function(){
       var left = 0
       if(100 - (this.getScrollPosTop/35) > 75){
-        left = 100 - (this.getScrollPosTop/50)
+        left = 100 - (this.getScrollPosTop/35)
       }else{
         left = 75
       }
       return left
     }
   },
+  watch:{
+    getScrollPosTop:function(getScrollPosTop){
+      if(getScrollPosTop>400){
+        this.preloadSlides()
+      }
+    }
+  },
   methods: {
+    preloadSlides:function(){
+      var objImg = new Image();
+      objImg.src = this.slideContent[0].slides[0].content[0].source;
+      var objImg = new Image();
+      objImg.src = this.slideContent[0].slides[0].content[1].source;
+    },
     toggleScroll: function(toggle) {
       if (toggle) {
         document.documentElement.style.overflowY = "hidden";
@@ -119,7 +136,7 @@ export default {
 
 <style lang="scss" scoped>
 .workSlideOpen {
-    transform: translateX(0vw) !important;
+    transform: translateX(0%) !important;
 
 }
 .workSlide {
@@ -160,42 +177,7 @@ export default {
           }
             .initSlideshowText {
             }
-            .nextSlide {
-                cursor: pointer;
-                position: relative;
-                display: inline-block;
 
-                .nextSlideInner {
-                    width: 40px;
-                    height: 30px;
-                    transform: translateX(-16px) translateY(12px);
-
-                }
-                span {
-                    width: 5px;
-                    background: white;
-                    height: 100%;
-                    position: absolute;
-                    transform-origin: center;
-                    left: 34px;
-                    top: -11px;
-                }
-                span:nth-of-type(1) {
-                    transform: rotate(45deg);
-                    height: 60%;
-                    left: 44px;
-                    top: 0;
-                }
-                span:nth-of-type(2) {
-                    transform: rotate(-45deg);
-                    height: 60%;
-                    left: 44px;
-                    top: -9px;
-                }
-                span:nth-of-type(3) {
-                    transform: rotate(90deg);
-                }
-            }
         }
 
     }
@@ -248,6 +230,50 @@ export default {
     }
 
 }
+
+.nextSlide {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+
+    .nextSlideInner {
+        width: 40px;
+        height: 30px;
+        transform: translateX(-16px) translateY(12px);
+
+    }
+
+    .small{
+      transform: scale(0.75,0.75)  translateX(-16px) translateY(12px);;
+
+
+    }
+    span {
+        width: 5px;
+        background: white;
+        height: 100%;
+        position: absolute;
+        transform-origin: center;
+        left: 34px;
+        top: -11px;
+    }
+    span:nth-of-type(1) {
+        transform: rotate(45deg);
+        height: 60%;
+        left: 44px;
+        top: 0;
+    }
+    span:nth-of-type(2) {
+        transform: rotate(-45deg);
+        height: 60%;
+        left: 44px;
+        top: -9px;
+    }
+    span:nth-of-type(3) {
+        transform: rotate(90deg);
+    }
+}
+
 .startWrapperMobile {
     position: absolute;
     left: 0;

@@ -6,15 +6,14 @@ Lasse van den Bosch Christensen / 1988 / Danish / Danish (+Swedish,Norwegian), D
 
 Lasse has a broad experience as designer, developer and strategist. He finds transitioning between roles as a thinker and as maker really exciting. He is convinced that  being capable of handling communications, conceptualization and implementation is essential in developing modern digital products.
 
-#Education:
+#Education/Work:
 
-2013 - 2015: MA Communications and Design, Piet Zwart Institute, Rotterdam NL (Cum laude)
+2014 - : Partner and Technical Lead at Template Studio in Rotterdam.
 
-2010 - 2013: BA Communications, Designskolen Kolding, Kolding DK (Cum laude)
+2012 - 2014: MA Communications and Design, Piet Zwart Institute, Rotterdam NL (Cum laude)
 
-Professional work experience:
+2009 - 2012: BA Communications, Designskolen Kolding, Kolding DK (Cum laude)
 
-2015 - : Partner and Technical Lead at Template Studio in Rotterdam.
 
 #Clients I worked for:
 

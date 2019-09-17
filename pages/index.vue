@@ -4,7 +4,7 @@
     <div :id="section.id" v-for="(section,index) in sections" :key="'key'+section.id">
 
 
-      <div :class="[section.fullHeight?'fullHeight':'', section.background.type === 'solid' ? section.background.class:'']" class="sectionWrapper" :style=" [index===0 ? ($store.state.chatOpen ? {'transform':'translateX(-500px)'}:{}):{},section.background.type === 'image' ? { 'background-position' : section.background.align, 'background-image': 'url(' + section.background.source + ')' }:{}]">
+      <div :class="[section.fullHeight?'fullHeight':'', section.background.type === 'solid' ? section.background.class:'']" class="sectionWrapper" :style=" [index===0 ? ($store.state.chatOpen ? {'transform':'translateX(-500px)'}:{}):{}, section.background.type === 'image' ? {'background-image': 'url(' + determainSource(section.background.source,  section.background.sourcemobile)  + ')' }:{} ,section.background.type === 'image' ? { 'background-position' : section.background.align}:{}]">
         <div :class="section.id!='contact'?'p-40':''" v-for="(item,index) in section.content" :key="index">
           <div class="columns">
             <div v-if="item.header" :class="item.classes">
@@ -21,10 +21,15 @@
               <cv></cv>
             </div>
 
-            <div v-if="item.component === 'pongWrapper' && $mq === 'lg' && readyFirst">
+            <div v-if="item.component === 'chatInit' && $mq === 'lg' && readyFirst">
               <div>
                 <chatInit class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></chatInit>
-                <!-- <pongWrapper class="scaleOutComputerInit" :class="scaleOutComputer?'scaleOutComputer':''"></pongWrapper> -->
+              </div>
+            </div>
+
+            <div v-if="item.component === 'chatInit' && $mq != 'lg' && readyFirst">
+              <div>
+                <chatInit :mobile="true" :class="scaleOutComputer?'scaleOutComputer':''"></chatInit>
               </div>
             </div>
 
@@ -44,7 +49,6 @@
 <script>
 import sectionContent from '~/static/content/sectionContent.json'
 
-import pongWrapper from '~/components/pongWrapper'
 import chatInit from '~/components/chatInit'
 import cvBegin from '~/components/cvBegin'
 import cv from '~/components/cv'
@@ -56,7 +60,6 @@ export default {
     cvBegin,
     cv,
     contact,
-    pongWrapper,
     chatInit,
     workSlides,
     chatwrapper
@@ -70,10 +73,17 @@ export default {
     }
   },
   methods: {
+    determainSource: function(desktopsource,mobilesource){
+      if(this.$mq === 'lg'){
+        return desktopsource
+      }else{
+        return mobilesource
+      }
+    },
     handleScroll: function() {
       this.scrollPosTop = window.scrollY;
       this.$store.commit('SET_SCROLLPOSTOP',this.scrollPosTop)
-      if (this.scrollPosTop != 0) {
+      if (this.scrollPosTop > 20) {
         this.scaleOutComputer = true
       } else {
         this.scaleOutComputer = false
