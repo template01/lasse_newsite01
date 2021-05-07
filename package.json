@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "bulma": "^0.7.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.21",
     "nuxt": "^1.0.0",
     "nuxt-mq": "^1.0.5",
     "showdown": "^1.8.6",
