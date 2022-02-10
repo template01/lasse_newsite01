@@ -36,7 +36,7 @@
     "eslint-loader": "^1.7.1",
     "eslint-plugin-vue": "^4.0.0",
     "jsonplus": "^1.2.1",
-    "node-sass": "^4.9.0",
+    "node-sass": "^7.0.0",
     "nuxt-sass-resources-loader": "^2.0.0",
     "sass-loader": "^7.0.1",
     "vue-style-loader": "^4.1.0"
